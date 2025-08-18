@@ -6,7 +6,7 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
     var kcal: Int
     var items: [FoodPortion]
     var manualKcalText: String?
-    var appearance: CardAppearance?    // 自定义（可空）
+    var appearance: CardAppearance?
 
     var id: String { name.id }
 

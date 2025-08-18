@@ -23,7 +23,8 @@
 		E9B7015D2E4D9E2C00A46F7A /* MealCardStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B7015C2E4D9E2C00A46F7A /* MealCardStateStore.swift */; };
 		E9B7015E2E4DA07C00A46F7A /* DayRollover.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B701532E4D9B0400A46F7A /* DayRollover.swift */; };
 		E9B701602E50274D00A46F7A /* MealCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B7015F2E50274900A46F7A /* MealCard.swift */; };
-		E9E25AEC2E5186A8004D30BD /* ExpendedNewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E25AEB2E5186A0004D30BD /* ExpendedNewCard.swift */; };
+		E9C76AF82E52D81B00853B5E /* DayEndPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C76AF72E52D81700853B5E /* DayEndPicker.swift */; };
+		E9E25AEC2E5186A8004D30BD /* ExpandedCardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E25AEB2E5186A0004D30BD /* ExpandedCardSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +46,8 @@
 		E9B701532E4D9B0400A46F7A /* DayRollover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRollover.swift; sourceTree = "<group>"; };
 		E9B7015C2E4D9E2C00A46F7A /* MealCardStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCardStateStore.swift; sourceTree = "<group>"; };
 		E9B7015F2E50274900A46F7A /* MealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCard.swift; sourceTree = "<group>"; };
-		E9E25AEB2E5186A0004D30BD /* ExpendedNewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpendedNewCard.swift; sourceTree = "<group>"; };
+		E9C76AF72E52D81700853B5E /* DayEndPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEndPicker.swift; sourceTree = "<group>"; };
+		E9E25AEB2E5186A0004D30BD /* ExpandedCardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedCardSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,8 +132,9 @@
 		E91F12C32E4D16B10003BCF9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E9C76AF72E52D81700853B5E /* DayEndPicker.swift */,
 				E91F12D12E4D3D820003BCF9 /* ExpandedKcalCard.swift */,
-				E9E25AEB2E5186A0004D30BD /* ExpendedNewCard.swift */,
+				E9E25AEB2E5186A0004D30BD /* ExpandedCardSettings.swift */,
 				E91F12C82E4D1A850003BCF9 /* FoodPicker.swift */,
 				E91F12C42E4D17250003BCF9 /* CardView.swift */,
 				E9089BC42E4D0E2900309575 /* ContentView.swift */,
@@ -223,9 +226,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9C76AF82E52D81B00853B5E /* DayEndPicker.swift in Sources */,
 				E91F12BA2E4D139B0003BCF9 /* AppBootstrapper.swift in Sources */,
 				E91F12D22E4D3D840003BCF9 /* ExpandedKcalCard.swift in Sources */,
-				E9E25AEC2E5186A8004D30BD /* ExpendedNewCard.swift in Sources */,
+				E9E25AEC2E5186A8004D30BD /* ExpandedCardSettings.swift in Sources */,
 				E91F12C52E4D172B0003BCF9 /* CardView.swift in Sources */,
 				E91F12D42E4D3EE20003BCF9 /* ExpandedMealCardStyle.swift in Sources */,
 				E9B701512E4D789F00A46F7A /* FoodPortion.swift in Sources */,
