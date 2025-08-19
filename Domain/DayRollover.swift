@@ -13,7 +13,7 @@ struct DayRollover {
 
     static func cycleKey(now: Date = Date(), tz: TimeZone = .current) -> String {
         let cal = Calendar(identifier: .gregorian)
-        var comps = cal.dateComponents(in: tz, from: now)
+        let comps = cal.dateComponents(in: tz, from: now)
         let hour = comps.hour ?? 0
         var base = now
         if hour < cutoffHour, let prev = cal.date(byAdding: .day, value: -1, to: now) {

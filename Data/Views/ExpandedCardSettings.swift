@@ -2,17 +2,14 @@ import SwiftUI
 import UIKit
 
 struct ExpandedCardSettings: View {
-    // 传入一个草稿（新建=空白草稿，编辑=现卡拷贝）
     let draft: MealCard
-
-    // 用于重名校验；编辑时传入 originalName 以排除自身
     let existingNames: [String]
-    let originalName: String?
+    let originalName: String?          // nil=新建; 非nil=编辑
 
     var onCancel: () -> Void
     var onSave: (MealCard) -> Void
+    var onAutoUpdate: (MealCard) -> Void   // ✅ 新增：编辑时的实时保存
 
-    // 本地编辑状态（从 draft 初始化）
     @State private var pickedSymbol: String = "fork.knife"
     @State private var pickedColor: Color  = Color(.systemBlue)
     @State private var nameText: String = ""
@@ -20,6 +17,9 @@ struct ExpandedCardSettings: View {
     @State private var dragOffset: CGFloat = 0
     @FocusState private var nameFocused: Bool
     @State private var showDupHint: Bool = false
+    @State private var lastValidName: String = ""
+
+    private var isEditingExisting: Bool { originalName != nil }
 
     private let symbolCandidates = [
         "fork.knife", "sunrise", "moon.stars", "takeoutbag.and.cup.and.straw",
@@ -35,14 +35,20 @@ struct ExpandedCardSettings: View {
         ZStack {
             Color.black.opacity(0.2)
                 .ignoresSafeArea()
-                .onTapGesture { onCancel() }
+                .onTapGesture {
+                    if isEditingExisting {
+                        finishIfValid()
+                    } else {
+                        onCancel()
+                    }
+                }
 
             VStack {
                 Spacer(minLength: 0)
 
                 ZStack {
                     RoundedRectangle(cornerRadius: CardStyle.cornerRadius, style: .continuous)
-                        .fill(.white)
+                        .fill(pickedColor)
                         .shadow(radius: CardStyle.shadowRadius, y: CardStyle.shadowYOffset)
 
                     VStack(spacing: 14) {
@@ -60,28 +66,34 @@ struct ExpandedCardSettings: View {
             }
         }
         .onAppear {
-            // 从 draft 初始化 UI
+            // 新建用默认；编辑沿用原卡外观
             pickedSymbol = draft.appearance?.symbol ?? draft.displaySymbol
             pickedColor  = draft.appearance?.color  ?? draft.displayColor
+            lastValidName = draft.name.rawValue   // ← 初始合法名
             nameText     = draft.name.rawValue
-            nameFocused  = draft.name.rawValue.isEmpty // 新建时聚焦
+            nameFocused  = originalName == nil
         }
+        // ✅ 编辑时：实时保存（名字合法才触发）
+        .onChange(of: nameText) { _, _ in commitIfNeeded() }
+        .onChange(of: pickedSymbol) { _, _ in commitIfNeeded() }
+        .onChange(of: pickedColor)  { _, _ in commitIfNeeded() }
     }
 
-    // MARK: Header
+    // MARK: - Header
     private var header: some View {
         HStack(spacing: 10) {
             ZStack {
-                Circle().fill(pickedColor.opacity(0.25))
+                Circle().fill(Color.white.opacity(0.25))
                 Image(systemName: pickedSymbol)
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(pickedColor)
+                    .foregroundStyle(.white)
             }
             .frame(width: 32, height: 32)
 
-            Text(nameText.isEmpty ? String(localized: "new_card") : String(localized: "edit_card"))
+            Text(isEditingExisting ? String(localized: "edit_card")
+                                   : String(localized: "new_card"))
                 .font(.title3.bold())
-                .foregroundStyle(.primary)
+                .foregroundStyle(.white)
 
             Spacer()
         }
@@ -89,50 +101,25 @@ struct ExpandedCardSettings: View {
         .padding(.top, 14)
     }
 
-    // MARK: Content
+    // MARK: - Content
     private var contentBlock: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius, style: .continuous)
                 .fill(.ultraThinMaterial)
 
             VStack(spacing: 12) {
-                // 图标
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(String(localized: "icon")).font(.headline)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ForEach(validSymbols, id: \.self) { s in
-                                Button { pickedSymbol = s } label: {
-                                    ZStack {
-                                        Circle()
-                                            .fill(s == pickedSymbol ? pickedColor.opacity(0.25) : Color.secondary.opacity(0.15))
-                                            .overlay(
-                                                Circle().strokeBorder(s == pickedSymbol ? pickedColor : .clear, lineWidth: 2)
-                                            )
-                                        Image(systemName: s)
-                                            .font(.system(size: 18, weight: .semibold))
-                                            .foregroundStyle(s == pickedSymbol ? pickedColor : .secondary)
-                                    }
-                                    .frame(width: 36, height: 36)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                        .padding(.vertical, 2)
-                    }
-                }
-                .padding(ContentBlockStyle.padding)
-                .background(RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius).fill(.thinMaterial))
-
-                // 名称
+                // 1) Title
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text(String(localized: "title")).font(.headline)
+                            .foregroundStyle(.primary)
                         if showDupHint {
-                            Text(String(localized: "title_already_exists")).foregroundStyle(.red).font(.footnote)
+                            Text(String(localized: "title_already_exists"))
+                                .foregroundStyle(.red)
+                                .font(.footnote)
                         }
                     }
-                    TextField(String(localized: "title_example"), text: $nameText)
+                    TextField("", text: $nameText)
                         .textInputAutocapitalization(.words)
                         .autocorrectionDisabled()
                         .focused($nameFocused)
@@ -140,65 +127,125 @@ struct ExpandedCardSettings: View {
                         .submitLabel(.done)
                 }
                 .padding(ContentBlockStyle.padding)
-                .background(RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius).fill(.thinMaterial))
+                .background(
+                    RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius).fill(.thinMaterial)
+                )
 
-                // 颜色
+                // 2) 图标
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(String(localized: "color")).font(.headline)
-                    Wrap(colors: colorCandidates, spacing: 10) { c in
-                        Button { pickedColor = c } label: {
-                            Circle()
-                                .fill(c)
-                                .overlay(
-                                    Circle().strokeBorder(pickedColor.hexRGB == c.hexRGB ? Color.primary.opacity(0.9) : .clear, lineWidth: 2)
-                                )
-                                .frame(width: 28, height: 28)
+                    Text(String(localized: "icon")).font(.headline)
+                        .foregroundStyle(.primary)
+                    Wrap(symbolCandidates, spacing: 10) { s in
+                        Button { pickedSymbol = s } label: {
+                            ZStack {
+                                Circle()
+                                    .fill(s == pickedSymbol ? Color.white.opacity(0.25) : Color.white.opacity(0.15))
+                                    .overlay(
+                                        Circle().strokeBorder(s == pickedSymbol ? .white : .clear, lineWidth: 2)
+                                    )
+                                Image(systemName: s)
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(.white)
+                                    .opacity(s == pickedSymbol ? 1 : 0.85)
+                            }
+                            .frame(width: 32, height: 32)
                         }
                         .buttonStyle(.plain)
                     }
                 }
                 .padding(ContentBlockStyle.padding)
-                .background(RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius).fill(.thinMaterial))
+                .background(
+                    RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius).fill(.thinMaterial)
+                )
+
+                // 3) 颜色
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(String(localized: "color")).font(.headline)
+                        .foregroundStyle(.primary)
+                    Wrap(colorCandidates, spacing: 10) { c in
+                        Button { pickedColor = c } label: {
+                            Circle()
+                                .fill(c)
+                                .overlay(
+                                    Circle().strokeBorder(
+                                        pickedColor.hexRGB == c.hexRGB ? Color.primary.opacity(0.9) : .clear,
+                                        lineWidth: 2
+                                    )
+                                )
+                                .frame(width: 32, height: 32)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(ContentBlockStyle.padding)
+                .background(
+                    RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius).fill(.thinMaterial)
+                )
             }
             .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, 14)
         .padding(.bottom, 14)
         .frame(maxHeight: .infinity, alignment: .top)
     }
 
-    // MARK: Bottom
+    // MARK: - Bottom
     private var bottomBar: some View {
         HStack(spacing: 12) {
-            Button(role: .cancel) { onCancel() } label: {
-                Text(LocalizedStringKey("cancel")).frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.gray.opacity(0.35))
-
-            Button {
-                if validateName() {
-                    let appearance = CardAppearance(symbol: pickedSymbol, colorHex: pickedColor.hexRGB)
-                    var result = draft
-                    result.name = CardName(rawValue: trimmedName())
-                    result.appearance = appearance
-                    onSave(result)                          // ← 统一回传
+            if isEditingExisting {
+                // 编辑：只有 Finish
+                Button {
+                    finishIfValid()
+                } label: {
+                    Text(LocalizedStringKey("finish"))
+                        .bold()
+                        .frame(maxWidth: .infinity)
                 }
-            } label: {
-                Text(LocalizedStringKey("save")).bold().frame(maxWidth: .infinity)
+                .buttonStyle(.borderedProminent)
+                .tint(.white.opacity(0.9))
+                .foregroundStyle(.black)
+                .disabled(!canCommit)
+            } else {
+                // 新建：Cancel + Save
+                Button(role: .cancel) { onCancel() } label: {
+                    Text(LocalizedStringKey("cancel")).frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.gray.opacity(0.35))
+
+                Button {
+                    if validateName() {
+                        onSave(buildResult())
+                    }
+                } label: {
+                    Text(LocalizedStringKey("save")).bold().frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.white.opacity(0.9))
+                .foregroundStyle(.black)
+                .disabled(trimmedName().isEmpty)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.white.opacity(0.9))
-            .foregroundStyle(.black)
-            .disabled(trimmedName().isEmpty)
         }
         .padding(.horizontal, 14)
         .padding(.bottom, 14)
     }
 
-    // MARK: Helpers
-    private var validSymbols: [String] {
-        symbolCandidates.filter { UIImage(systemName: $0) != nil }
+    // MARK: - Helpers
+    private var canCommit: Bool {
+        // 名称合法（非空、且在“允许同名保留原名”的前提下不重复）
+        let n = trimmedName().lowercased()
+        if n.isEmpty { return false }
+        var pool = Set(existingNames.map { $0.lowercased() })
+        if let original = originalName?.lowercased() { pool.remove(original) }
+        return !pool.contains(n)
+    }
+
+    private func buildResult() -> MealCard {
+        var result = draft
+        result.name = CardName(rawValue: trimmedName())
+        result.appearance = CardAppearance(symbol: pickedSymbol, colorHex: pickedColor.hexRGB)
+        return result
     }
 
     private func trimmedName() -> String {
@@ -206,68 +253,119 @@ struct ExpandedCardSettings: View {
     }
 
     private func validateName() -> Bool {
-        let n = trimmedName().lowercased()
-        var pool = Set(existingNames.map { $0.lowercased() })
-        if let original = originalName?.lowercased() {
-            pool.remove(original)                  // 编辑时排除自己的原名
-        }
-        let dup = pool.contains(n)
-        showDupHint = dup
-        if dup {
-            nameText = ""
-            nameFocused = true
-        }
-        return !dup && !n.isEmpty
+        let ok = canCommit
+        showDupHint = !ok
+        if !ok { nameFocused = true }
+        return ok
     }
 
+    // 编辑时：只要可提交就触发实时保存
+    private func commitIfNeeded() {
+        guard isEditingExisting, canCommit else { return }
+        let result = buildResult()
+        lastValidName = trimmedName()         // ← 提交成功后，刷新最近合法名
+        onAutoUpdate(result)
+    }
+
+    private func finishIfValid() {
+        if canCommit {
+            onSave(buildResult())
+        } else {
+            // 名字不合法（重复或为空）
+            showDupHint = true
+            nameFocused = true
+            // 回退：编辑回退到最近合法名；新建回退为空
+            if isEditingExisting {
+                nameText = lastValidName
+            } else {
+                nameText = ""
+            }
+        }
+    }
+
+
+    // MARK: - Gestures
     private var dragToClose: some Gesture {
         DragGesture()
             .onChanged { v in dragOffset = max(0, v.translation.height) }
             .onEnded { v in
-                if v.translation.height > 120 { onCancel() }
-                else { withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) { dragOffset = 0 } }
+                if v.translation.height > 120 {
+                    if isEditingExisting {
+                        finishIfValid()  // 编辑：Finish
+                    } else {
+                        onCancel()       // 新建：Cancel
+                    }
+                } else {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) { dragOffset = 0 }
+                }
             }
     }
 }
 
-struct Wrap<Data: RandomAccessCollection, Content: View>: View where Data.Element: Equatable {
+// Wrap & FlowLayout 同你现有版本
+
+
+// 简易换行容器（图标/颜色通用）— 使用 Layout，稳定左对齐换行
+struct Wrap<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
     let data: Data
     let spacing: CGFloat
     let content: (Data.Element) -> Content
 
-    init(colors: Data, spacing: CGFloat = 8, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        self.data = colors
+    init(_ data: Data, spacing: CGFloat = 8, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        self.data = data
         self.spacing = spacing
         self.content = content
     }
 
     var body: some View {
-        var width: CGFloat = 0
-        var height: CGFloat = 0
-        return GeometryReader { geo in
-            ZStack(alignment: .topLeading) {
-                ForEach(Array(data.enumerated()), id: \.offset) { _, element in
-                    content(element)
-                        .padding(.trailing, spacing)
-                        .padding(.bottom, spacing)
-                        .alignmentGuide(.leading) { d in
-                            if (abs(width - d.width) > geo.size.width) {
-                                width = 0
-                                height -= d.height + spacing
-                            }
-                            let result = width
-                            if element == data.last { width = 0 }
-                            else { width -= d.width + spacing }
-                            return result
-                        }
-                        .alignmentGuide(.top) { _ in
-                            let result = height
-                            if element == data.last { height = 0 }
-                            return result
-                        }
-                }
+        FlowLayout(spacing: spacing) {
+            ForEach(Array(data), id: \.self) { item in
+                content(item)
             }
         }
-        .frame(height: 100) // 可按需调整
+    }
+}
+
+// 基于 Layout 的流式布局：从左到右，放不下则换行到下一行，从左边重新开始
+struct FlowLayout: Layout {
+    var spacing: CGFloat = 8
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let maxWidth = proposal.width ?? .infinity
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        var lineHeight: CGFloat = 0
+
+        for sub in subviews {
+            let size = sub.sizeThatFits(.unspecified)
+            if x > 0 && x + size.width > maxWidth {      // 换行
+                x = 0
+                y += lineHeight + spacing
+                lineHeight = 0
+            }
+            lineHeight = max(lineHeight, size.height)
+            x += size.width + spacing
+        }
+        return CGSize(width: maxWidth, height: y + lineHeight)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let maxWidth = bounds.width
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        var lineHeight: CGFloat = 0
+
+        for sub in subviews {
+            let size = sub.sizeThatFits(.unspecified)
+            if x > 0 && x + size.width > maxWidth {      // 换行
+                x = 0
+                y += lineHeight + spacing
+                lineHeight = 0
+            }
+            sub.place(at: CGPoint(x: bounds.minX + x, y: bounds.minY + y),
+                      proposal: ProposedViewSize(size))
+            lineHeight = max(lineHeight, size.height)
+            x += size.width + spacing
+        }
     }
 }

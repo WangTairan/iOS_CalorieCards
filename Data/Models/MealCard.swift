@@ -69,14 +69,14 @@ extension Color {
 struct DefaultAppearance {
     static func `for`(_ name: CardName) -> CardAppearance {
         switch name.rawValue {
-        case "breakfast":
+        case "Breakfast":
             return .init(symbol: "sunrise", colorHex: "#007AFF")     // systemBlue
-        case "lunch":
+        case "Lunch":
             return .init(symbol: "fork.knife.circle", colorHex: "#007AFF")
-        case "snack":
+        case "Snack":
             return .init(symbol: "takeoutbag.and.cup.and.straw", colorHex: "#FF9500") // systemOrange
-        case "dinner":
-            return .init(symbol: "moon.stars", colorHex: "#9824FF")  // systemPurple 近似
+        case "Dinner":
+            return .init(symbol: "moon.stars", colorHex: "#007AFF")  // systemPurple 近似
         default:
             return .init(symbol: "fork.knife", colorHex: "#007AFF")
         }

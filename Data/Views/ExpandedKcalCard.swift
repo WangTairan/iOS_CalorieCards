@@ -3,8 +3,7 @@ import SwiftUI
 struct ExpandedKcalCard: View {
     @Binding var card: MealCard
     var namespace: Namespace.ID
-    var onSave: (Int) -> Void
-    var onCancel: () -> Void
+    var onFinish: (Int) -> Void
     var onAutoUpdate: () -> Void
 
     @State private var showingPicker = false
@@ -28,7 +27,7 @@ struct ExpandedKcalCard: View {
         ZStack {
             Color.black.opacity(0.2)
                 .ignoresSafeArea()
-                .onTapGesture { onCancel() }
+                .onTapGesture { finish() }   // 点击幕布关闭
 
             VStack {
                 Spacer(minLength: 0)
@@ -38,6 +37,7 @@ struct ExpandedKcalCard: View {
                         .fill(card.displayColor)
                         .shadow(radius: CardStyle.shadowRadius, y: CardStyle.shadowYOffset)
                         .matchedGeometryEffect(id: card.id, in: namespace, isSource: false)
+
                     VStack(spacing: 14) {
                         header
                         contentBlock
@@ -125,7 +125,7 @@ struct ExpandedKcalCard: View {
                     HStack {
                         Text(LocalizedStringKey("extra_add_kcal")).foregroundStyle(.secondary)
                         Spacer()
-                        TextField("0", text: manualTextBinding) // 直接绑 card.manualKcalText
+                        TextField("0", text: manualTextBinding)
                             .keyboardType(.numberPad)
                             .multilineTextAlignment(.trailing)
                             .frame(width: 90)
@@ -145,33 +145,25 @@ struct ExpandedKcalCard: View {
         .frame(maxHeight: .infinity, alignment: .top)
     }
 
-    // MARK: - Bottom Actions
+    // MARK: - Bottom Bar
     private var bottomBar: some View {
         HStack(spacing: 12) {
-            Button(role: .cancel) {
-                onCancel()
-            } label: {
-                Text(LocalizedStringKey("cancel")).frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.gray.opacity(0.35))
-
             Button {
-                persistNowAndUpdateKcal()
-                onSave(totalKcal)
+                finish()
             } label: {
-                Text(LocalizedStringKey("save")).bold().frame(maxWidth: .infinity)
+                Text(String(localized: "finish"))
+                    .bold()
+                    .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
             .tint(.white.opacity(0.9))
             .foregroundStyle(.black)
-            .disabled(card.items.isEmpty && Int(card.manualKcalText ?? "") == nil)
         }
         .padding(.horizontal, 14)
         .padding(.bottom, 14)
     }
 
-    // MARK: - Row （恢复成你原来的样式与交互）
+    // MARK: - Row
     @ViewBuilder
     private func itemRow(item: Binding<FoodPortion>) -> some View {
         let isPiece = (item.wrappedValue.unit == .perPiece)
@@ -181,8 +173,6 @@ struct ExpandedKcalCard: View {
         let maxValue: Double = isPiece ? 999 : 99_999
 
         VStack(alignment: .leading, spacing: 6) {
-
-            // 顶部行：标题在左，kcal 在右
             HStack(spacing: 8) {
                 Text(item.wrappedValue.localizedName)
                     .font(.headline)
@@ -198,20 +188,13 @@ struct ExpandedKcalCard: View {
                     .truncationMode(.tail)
                     .frame(minWidth: 0, maxWidth: ControlsStyle.kcalColumnMaxWidth, alignment: .trailing)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
 
-            // 底部行：控制条整体左，右侧删除
             HStack(alignment: .center, spacing: 12) {
-
-                // —— 控制条（左）——
                 HStack(spacing: 0) {
-                    // 上下限 flag
                     let canDecrement = item.quantity.wrappedValue > 1
                     let canIncrement = item.quantity.wrappedValue < maxValue
 
-                    // 减号
                     Button {
-                        // 目标值若 < 1，强制设为 1
                         item.quantity.wrappedValue = max(1, item.quantity.wrappedValue - step)
                         enforceDigitLimit(for: &item.wrappedValue, maxValue: Double(maxValue), integerOnly: true)
                         persistNowAndUpdateKcal()
@@ -219,31 +202,25 @@ struct ExpandedKcalCard: View {
                         Image(systemName: "minus.circle.fill")
                             .foregroundColor(.blue)
                             .font(ControlsStyle.iconFont)
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 2)
-                            .opacity(canDecrement ? 1 : 0.4) // 视觉弱化
+                            .opacity(canDecrement ? 1 : 0.4)
                     }
                     .buttonStyle(.plain)
                     .disabled(!canDecrement)
 
                     Spacer().frame(width: ControlsStyle.ctrlOuterSpacing)
 
-                    // 数字胶囊 + 单位
                     HStack(spacing: ControlsStyle.numberUnitSpacing) {
                         TextField("", value: item.quantity, format: .number)
                             .keyboardType(.numberPad)
-                            .multilineTextAlignment(.center)  // 数字居中
+                            .multilineTextAlignment(.center)
                             .monospacedDigit()
                             .font(ControlsStyle.fieldFont)
                             .textFieldStyle(.plain)
-                            .frame(width: fieldWidth, alignment: .center)
-                            .padding(.vertical, 6)             // 胶囊形状
-                            .background(
-                                Capsule(style: .continuous).fill(.thinMaterial)
-                            )
+                            .frame(width: fieldWidth)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(.thinMaterial))
                             .overlay(
-                                Capsule(style: .continuous)
-                                    .strokeBorder(Color.secondary.opacity(0.35), lineWidth: 1)
+                                Capsule().strokeBorder(Color.secondary.opacity(0.35), lineWidth: 1)
                             )
                             .onChange(of: item.quantity.wrappedValue) { _, _ in
                                 enforceDigitLimit(for: &item.wrappedValue, maxValue: Double(maxValue), integerOnly: true)
@@ -252,30 +229,25 @@ struct ExpandedKcalCard: View {
 
                         Text(item.wrappedValue.unitShortLocalized)
                             .foregroundStyle(.secondary)
-                            .lineLimit(1)
                             .frame(width: unitWidth, alignment: .leading)
                     }
 
                     Spacer().frame(width: ControlsStyle.ctrlOuterSpacing)
 
-                    // 加号
                     Button {
-                        item.quantity.wrappedValue = item.quantity.wrappedValue + step
+                        item.quantity.wrappedValue += step
                         enforceDigitLimit(for: &item.wrappedValue, maxValue: Double(maxValue), integerOnly: true)
                         persistNowAndUpdateKcal()
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.blue)
                             .font(ControlsStyle.iconFont)
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 2)
                             .opacity(canIncrement ? 1 : 0.4)
                     }
                     .buttonStyle(.plain)
                     .disabled(!canIncrement)
                 }
 
-                // —— 删除按钮（右）——
                 Spacer(minLength: 8)
 
                 Button {
@@ -287,11 +259,8 @@ struct ExpandedKcalCard: View {
                     Image(systemName: "trash")
                 }
                 .tint(.red)
-                .accessibilityLabel(LocalizedStringKey("delete"))
                 .buttonStyle(.plain)
-                .padding(.vertical, 4)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, 6)
     }
@@ -302,10 +271,8 @@ struct ExpandedKcalCard: View {
                                    integerOnly: Bool)
     {
         var q = portion.quantity
-        if integerOnly {
-            q = Double(Int(q.rounded()))   // 仅整数
-        }
-        q = max(1, min(q, maxValue))       // [1, 上限]
+        if integerOnly { q = Double(Int(q.rounded())) }
+        q = max(1, min(q, maxValue))
         portion.quantity = q
     }
 
@@ -315,7 +282,7 @@ struct ExpandedKcalCard: View {
             .onChanged { value in dragOffset = max(0, value.translation.height) }
             .onEnded { value in
                 if value.translation.height > 120 {
-                    onCancel()
+                    finish()  // 下拉超过阈值也 Finish
                 } else {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
                         dragOffset = 0
@@ -324,9 +291,14 @@ struct ExpandedKcalCard: View {
             }
     }
 
-    // MARK: - Persist
+    // MARK: - Persist + Finish
     private func persistNowAndUpdateKcal() {
         card.kcal = totalKcal
-        onAutoUpdate()   // 通知上层保存整个 cards
+        onAutoUpdate()
+    }
+
+    private func finish() {
+        persistNowAndUpdateKcal()
+        onFinish(totalKcal)   // 通知上层退出
     }
 }

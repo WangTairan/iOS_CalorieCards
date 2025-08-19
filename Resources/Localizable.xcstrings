@@ -184,6 +184,23 @@
         }
       }
     },
+    "duration_hours %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duration: %@ hours"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "持续 %@ 小时"
+          }
+        }
+      }
+    },
     "edit" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -212,7 +229,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "编辑卡片"
           }
         }
@@ -235,6 +252,23 @@
         }
       }
     },
+    "finish" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
     "food_library" : {
       "localizations" : {
         "en" : {
@@ -247,6 +281,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "食材库"
+          }
+        }
+      }
+    },
+    "history" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "历史"
           }
         }
       }
@@ -335,6 +385,23 @@
         }
       }
     },
+    "no_history_yet" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No history yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史记录为空"
+          }
+        }
+      }
+    },
     "per_100g" : {
       "localizations" : {
         "en" : {
@@ -400,6 +467,23 @@
         }
       }
     },
+    "recent" : {
+
+    },
+    "Recent" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近"
+          }
+        }
+      }
+    },
+    "recent_summary" : {
+
+    },
     "save" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -434,6 +518,26 @@
         }
       }
     },
+    "start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始"
+          }
+        }
+      }
+    },
+    "start_unit" : {
+
+    },
     "title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -462,25 +566,24 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "标题已存在"
           }
         }
       }
     },
-    "title_example" : {
-      "extractionState" : "manual",
+    "today" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "e.g. Midnight Snack"
+            "value" : "Today"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "宵夜"
+            "value" : "今日"
           }
         }
       }

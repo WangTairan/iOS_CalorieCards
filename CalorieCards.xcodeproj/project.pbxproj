@@ -12,6 +12,10 @@
 		E9089BD02E4D0E2900309575 /* CalorieCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9089BC32E4D0E2900309575 /* CalorieCardsApp.swift */; };
 		E9089BD12E4D0E2900309575 /* FoodTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9089BC62E4D0E2900309575 /* FoodTemplate.swift */; };
 		E9089BD32E4D0E2900309575 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9089BC42E4D0E2900309575 /* ContentView.swift */; };
+		E9099C652E5427B100104A64 /* HistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C642E5427A300104A64 /* HistoryRecord.swift */; };
+		E9099C672E5427E500104A64 /* HistoryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C662E5427D300104A64 /* HistoryLoader.swift */; };
+		E90CE01E2E53615E00A7516D /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90CE01D2E53615800A7516D /* TodayView.swift */; };
+		E90CE0202E53619B00A7516D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90CE01F2E53619400A7516D /* HistoryView.swift */; };
 		E91F12BA2E4D139B0003BCF9 /* AppBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12B92E4D13980003BCF9 /* AppBootstrapper.swift */; };
 		E91F12BE2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12BD2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift */; };
 		E91F12C22E4D16080003BCF9 /* CardName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12C12E4D16060003BCF9 /* CardName.swift */; };
@@ -34,6 +38,10 @@
 		E9089BC72E4D0E2900309575 /* FoodTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FoodTemplates.json; sourceTree = "<group>"; };
 		E9089BC82E4D0E2900309575 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E90901EF2E4BE7EC001A9713 /* CalorieCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalorieCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9099C642E5427A300104A64 /* HistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRecord.swift; sourceTree = "<group>"; };
+		E9099C662E5427D300104A64 /* HistoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLoader.swift; sourceTree = "<group>"; };
+		E90CE01D2E53615800A7516D /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		E90CE01F2E53619400A7516D /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		E91F12B52E4D12490003BCF9 /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		E91F12B92E4D13980003BCF9 /* AppBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapper.swift; sourceTree = "<group>"; };
 		E91F12BD2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedTemplatesUseCase.swift; sourceTree = "<group>"; };
@@ -113,6 +121,7 @@
 			children = (
 				E9B7015F2E50274900A46F7A /* MealCard.swift */,
 				E9B701502E4D789F00A46F7A /* FoodPortion.swift */,
+				E9099C642E5427A300104A64 /* HistoryRecord.swift */,
 				E91F12D32E4D3EDA0003BCF9 /* ExpandedMealCardStyle.swift */,
 				E91F12C12E4D16060003BCF9 /* CardName.swift */,
 				E9089BC62E4D0E2900309575 /* FoodTemplate.swift */,
@@ -123,6 +132,7 @@
 		E91F12B62E4D12730003BCF9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E9099C662E5427D300104A64 /* HistoryLoader.swift */,
 				E9B7015C2E4D9E2C00A46F7A /* MealCardStateStore.swift */,
 				E91F12BD2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift */,
 			);
@@ -138,6 +148,8 @@
 				E91F12C82E4D1A850003BCF9 /* FoodPicker.swift */,
 				E91F12C42E4D17250003BCF9 /* CardView.swift */,
 				E9089BC42E4D0E2900309575 /* ContentView.swift */,
+				E90CE01D2E53615800A7516D /* TodayView.swift */,
+				E90CE01F2E53619400A7516D /* HistoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -233,11 +245,15 @@
 				E91F12C52E4D172B0003BCF9 /* CardView.swift in Sources */,
 				E91F12D42E4D3EE20003BCF9 /* ExpandedMealCardStyle.swift in Sources */,
 				E9B701512E4D789F00A46F7A /* FoodPortion.swift in Sources */,
+				E90CE0202E53619B00A7516D /* HistoryView.swift in Sources */,
+				E9099C652E5427B100104A64 /* HistoryRecord.swift in Sources */,
 				E9B701602E50274D00A46F7A /* MealCard.swift in Sources */,
+				E90CE01E2E53615E00A7516D /* TodayView.swift in Sources */,
 				E91F12C92E4D1A880003BCF9 /* FoodPicker.swift in Sources */,
 				E91F12BE2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift in Sources */,
 				E9B7015D2E4D9E2C00A46F7A /* MealCardStateStore.swift in Sources */,
 				E9089BD02E4D0E2900309575 /* CalorieCardsApp.swift in Sources */,
+				E9099C672E5427E500104A64 /* HistoryLoader.swift in Sources */,
 				E9089BD12E4D0E2900309575 /* FoodTemplate.swift in Sources */,
 				E9089BD32E4D0E2900309575 /* ContentView.swift in Sources */,
 				E91F12C22E4D16080003BCF9 /* CardName.swift in Sources */,
