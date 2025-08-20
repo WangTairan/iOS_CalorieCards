@@ -98,6 +98,23 @@
         }
       }
     },
+    "clear_history" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear History"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除历史"
+          }
+        }
+      }
+    },
     "color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -114,6 +131,12 @@
           }
         }
       }
+    },
+    "confirm_delete_all_message" : {
+
+    },
+    "confirm_delete_all_title" : {
+
     },
     "cutoff_hour" : {
 
@@ -163,6 +186,20 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
+          }
+        }
+      }
+    },
+    "Delete" : {
+
+    },
+    "delete_all" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除历史"
           }
         }
       }
@@ -468,7 +505,20 @@
       }
     },
     "recent" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近记录"
+          }
+        }
+      }
     },
     "Recent" : {
       "extractionState" : "stale",
@@ -480,9 +530,6 @@
           }
         }
       }
-    },
-    "recent_summary" : {
-
     },
     "save" : {
       "extractionState" : "manual",
@@ -534,9 +581,6 @@
           }
         }
       }
-    },
-    "start_unit" : {
-
     },
     "title" : {
       "extractionState" : "manual",
@@ -604,6 +648,12 @@
           }
         }
       }
+    },
+    "x" : {
+
+    },
+    "y" : {
+
     }
   },
   "version" : "1.0"

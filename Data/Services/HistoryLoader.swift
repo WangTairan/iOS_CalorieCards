@@ -68,3 +68,11 @@ final class HistoryLoader {
         return comps.date.map { ($0, cutoff) }
     }
 }
+
+
+extension HistoryLoader {
+    /// 删除一条历史记录
+    func delete(_ record: HistoryRecord) {
+        ud.removeObject(forKey: record.key)
+    }
+}

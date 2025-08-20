@@ -14,6 +14,8 @@
 		E9089BD32E4D0E2900309575 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9089BC42E4D0E2900309575 /* ContentView.swift */; };
 		E9099C652E5427B100104A64 /* HistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C642E5427A300104A64 /* HistoryRecord.swift */; };
 		E9099C672E5427E500104A64 /* HistoryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C662E5427D300104A64 /* HistoryLoader.swift */; };
+		E9099C692E5668E500104A64 /* HistoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C682E5668DA00104A64 /* HistoryChartView.swift */; };
+		E9099C6B2E5668F200104A64 /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C6A2E5668EF00104A64 /* HistoryListView.swift */; };
 		E90CE01E2E53615E00A7516D /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90CE01D2E53615800A7516D /* TodayView.swift */; };
 		E90CE0202E53619B00A7516D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90CE01F2E53619400A7516D /* HistoryView.swift */; };
 		E91F12BA2E4D139B0003BCF9 /* AppBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12B92E4D13980003BCF9 /* AppBootstrapper.swift */; };
@@ -40,6 +42,8 @@
 		E90901EF2E4BE7EC001A9713 /* CalorieCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalorieCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9099C642E5427A300104A64 /* HistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRecord.swift; sourceTree = "<group>"; };
 		E9099C662E5427D300104A64 /* HistoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLoader.swift; sourceTree = "<group>"; };
+		E9099C682E5668DA00104A64 /* HistoryChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChartView.swift; sourceTree = "<group>"; };
+		E9099C6A2E5668EF00104A64 /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		E90CE01D2E53615800A7516D /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		E90CE01F2E53619400A7516D /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		E91F12B52E4D12490003BCF9 /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 				E9089BC42E4D0E2900309575 /* ContentView.swift */,
 				E90CE01D2E53615800A7516D /* TodayView.swift */,
 				E90CE01F2E53619400A7516D /* HistoryView.swift */,
+				E9099C682E5668DA00104A64 /* HistoryChartView.swift */,
+				E9099C6A2E5668EF00104A64 /* HistoryListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,11 +259,13 @@
 				E91F12BE2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift in Sources */,
 				E9B7015D2E4D9E2C00A46F7A /* MealCardStateStore.swift in Sources */,
 				E9089BD02E4D0E2900309575 /* CalorieCardsApp.swift in Sources */,
+				E9099C692E5668E500104A64 /* HistoryChartView.swift in Sources */,
 				E9099C672E5427E500104A64 /* HistoryLoader.swift in Sources */,
 				E9089BD12E4D0E2900309575 /* FoodTemplate.swift in Sources */,
 				E9089BD32E4D0E2900309575 /* ContentView.swift in Sources */,
 				E91F12C22E4D16080003BCF9 /* CardName.swift in Sources */,
 				E9B7015E2E4DA07C00A46F7A /* DayRollover.swift in Sources */,
+				E9099C6B2E5668F200104A64 /* HistoryListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -54,11 +54,7 @@ struct TodayView: View {
             .presentationDetents([.height(320), .medium])
         }
         .onAppear {
-            if let savedCards = MealCardStateStore.shared.loadAll() {
-                self.cards = savedCards
-            } else {
-                MealCardStateStore.shared.saveAll(cards: self.cards)
-            }
+            self.cards = MealCardStateStore.shared.loadOrInitCards()
         }
     }
 

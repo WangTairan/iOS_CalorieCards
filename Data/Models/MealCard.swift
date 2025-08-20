@@ -29,15 +29,23 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
 
     var displaySymbol: String { effectiveAppearance.symbol }
     var displayColor: Color  { effectiveAppearance.color }
-}
 
+    /// 返回清零后的卡片（保留样式、名字，但去掉数据）
+    func cleared() -> MealCard {
+        MealCard(
+            name: self.name,
+            kcal: 0,
+            items: [],
+            manualKcalText: nil,
+            appearance: self.appearance
+        )
+    }
+}
 
 struct CardAppearance: Codable, Equatable, Hashable {
     var symbol: String        // SF Symbol 名称
     var colorHex: String      // 颜色十六进制
-}
 
-extension CardAppearance {
     var color: Color { Color(hex: colorHex) }
 }
 
