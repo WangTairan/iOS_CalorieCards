@@ -16,6 +16,15 @@
 		E9099C672E5427E500104A64 /* HistoryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C662E5427D300104A64 /* HistoryLoader.swift */; };
 		E9099C692E5668E500104A64 /* HistoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C682E5668DA00104A64 /* HistoryChartView.swift */; };
 		E9099C6B2E5668F200104A64 /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C6A2E5668EF00104A64 /* HistoryListView.swift */; };
+		E9099C6D2E567DAE00104A64 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C6C2E567DA600104A64 /* LibraryView.swift */; };
+		E9099C6F2E56900200104A64 /* AddFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C6E2E568FF900104A64 /* AddFoodView.swift */; };
+		E9099C712E56901F00104A64 /* MealSetEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C702E56901600104A64 /* MealSetEditor.swift */; };
+		E9099C732E56903B00104A64 /* MealSetDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C722E56903A00104A64 /* MealSetDetail.swift */; };
+		E9099C752E56C95300104A64 /* PinnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C742E56C94400104A64 /* PinnedView.swift */; };
+		E9099C792E56C97C00104A64 /* MealSetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C782E56C97400104A64 /* MealSetsView.swift */; };
+		E9099C7D2E56C9C900104A64 /* LibraryTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C7C2E56C9BA00104A64 /* LibraryTemplate.swift */; };
+		E9099C7F2E579F0400104A64 /* AllFoodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C7E2E579F0300104A64 /* AllFoodsView.swift */; };
+		E9099C812E57A1F600104A64 /* EditFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9099C802E57A1EF00104A64 /* EditFoodView.swift */; };
 		E90CE01E2E53615E00A7516D /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90CE01D2E53615800A7516D /* TodayView.swift */; };
 		E90CE0202E53619B00A7516D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90CE01F2E53619400A7516D /* HistoryView.swift */; };
 		E91F12BA2E4D139B0003BCF9 /* AppBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12B92E4D13980003BCF9 /* AppBootstrapper.swift */; };
@@ -44,6 +53,15 @@
 		E9099C662E5427D300104A64 /* HistoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLoader.swift; sourceTree = "<group>"; };
 		E9099C682E5668DA00104A64 /* HistoryChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChartView.swift; sourceTree = "<group>"; };
 		E9099C6A2E5668EF00104A64 /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
+		E9099C6C2E567DA600104A64 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		E9099C6E2E568FF900104A64 /* AddFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodView.swift; sourceTree = "<group>"; };
+		E9099C702E56901600104A64 /* MealSetEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealSetEditor.swift; sourceTree = "<group>"; };
+		E9099C722E56903A00104A64 /* MealSetDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealSetDetail.swift; sourceTree = "<group>"; };
+		E9099C742E56C94400104A64 /* PinnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedView.swift; sourceTree = "<group>"; };
+		E9099C782E56C97400104A64 /* MealSetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealSetsView.swift; sourceTree = "<group>"; };
+		E9099C7C2E56C9BA00104A64 /* LibraryTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTemplate.swift; sourceTree = "<group>"; };
+		E9099C7E2E579F0300104A64 /* AllFoodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFoodsView.swift; sourceTree = "<group>"; };
+		E9099C802E57A1EF00104A64 /* EditFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodView.swift; sourceTree = "<group>"; };
 		E90CE01D2E53615800A7516D /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		E90CE01F2E53619400A7516D /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		E91F12B52E4D12490003BCF9 /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
@@ -92,6 +110,44 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E9099C822E57AC7D00104A64 /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				E9C76AF72E52D81700853B5E /* DayEndPicker.swift */,
+				E91F12C82E4D1A850003BCF9 /* FoodPicker.swift */,
+				E91F12C42E4D17250003BCF9 /* CardView.swift */,
+				E91F12D12E4D3D820003BCF9 /* ExpandedKcalCard.swift */,
+				E9E25AEB2E5186A0004D30BD /* ExpandedCardSettings.swift */,
+				E90CE01D2E53615800A7516D /* TodayView.swift */,
+			);
+			path = Today;
+			sourceTree = "<group>";
+		};
+		E9099C842E57ACA000104A64 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				E9099C7E2E579F0300104A64 /* AllFoodsView.swift */,
+				E9099C6C2E567DA600104A64 /* LibraryView.swift */,
+				E9099C6E2E568FF900104A64 /* AddFoodView.swift */,
+				E9099C802E57A1EF00104A64 /* EditFoodView.swift */,
+				E9099C742E56C94400104A64 /* PinnedView.swift */,
+				E9099C782E56C97400104A64 /* MealSetsView.swift */,
+				E9099C702E56901600104A64 /* MealSetEditor.swift */,
+				E9099C722E56903A00104A64 /* MealSetDetail.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		E9099C852E57ACDF00104A64 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				E90CE01F2E53619400A7516D /* HistoryView.swift */,
+				E9099C682E5668DA00104A64 /* HistoryChartView.swift */,
+				E9099C6A2E5668EF00104A64 /* HistoryListView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		E91F12B02E4D0EFE0003BCF9 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +185,7 @@
 				E91F12D32E4D3EDA0003BCF9 /* ExpandedMealCardStyle.swift */,
 				E91F12C12E4D16060003BCF9 /* CardName.swift */,
 				E9089BC62E4D0E2900309575 /* FoodTemplate.swift */,
+				E9099C7C2E56C9BA00104A64 /* LibraryTemplate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -146,16 +203,10 @@
 		E91F12C32E4D16B10003BCF9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E9C76AF72E52D81700853B5E /* DayEndPicker.swift */,
-				E91F12D12E4D3D820003BCF9 /* ExpandedKcalCard.swift */,
-				E9E25AEB2E5186A0004D30BD /* ExpandedCardSettings.swift */,
-				E91F12C82E4D1A850003BCF9 /* FoodPicker.swift */,
-				E91F12C42E4D17250003BCF9 /* CardView.swift */,
+				E9099C852E57ACDF00104A64 /* History */,
+				E9099C842E57ACA000104A64 /* Library */,
+				E9099C822E57AC7D00104A64 /* Today */,
 				E9089BC42E4D0E2900309575 /* ContentView.swift */,
-				E90CE01D2E53615800A7516D /* TodayView.swift */,
-				E90CE01F2E53619400A7516D /* HistoryView.swift */,
-				E9099C682E5668DA00104A64 /* HistoryChartView.swift */,
-				E9099C6A2E5668EF00104A64 /* HistoryListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -244,22 +295,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9099C812E57A1F600104A64 /* EditFoodView.swift in Sources */,
 				E9C76AF82E52D81B00853B5E /* DayEndPicker.swift in Sources */,
 				E91F12BA2E4D139B0003BCF9 /* AppBootstrapper.swift in Sources */,
+				E9099C7F2E579F0400104A64 /* AllFoodsView.swift in Sources */,
 				E91F12D22E4D3D840003BCF9 /* ExpandedKcalCard.swift in Sources */,
+				E9099C6D2E567DAE00104A64 /* LibraryView.swift in Sources */,
 				E9E25AEC2E5186A8004D30BD /* ExpandedCardSettings.swift in Sources */,
 				E91F12C52E4D172B0003BCF9 /* CardView.swift in Sources */,
 				E91F12D42E4D3EE20003BCF9 /* ExpandedMealCardStyle.swift in Sources */,
 				E9B701512E4D789F00A46F7A /* FoodPortion.swift in Sources */,
+				E9099C6F2E56900200104A64 /* AddFoodView.swift in Sources */,
 				E90CE0202E53619B00A7516D /* HistoryView.swift in Sources */,
 				E9099C652E5427B100104A64 /* HistoryRecord.swift in Sources */,
 				E9B701602E50274D00A46F7A /* MealCard.swift in Sources */,
 				E90CE01E2E53615E00A7516D /* TodayView.swift in Sources */,
 				E91F12C92E4D1A880003BCF9 /* FoodPicker.swift in Sources */,
 				E91F12BE2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift in Sources */,
+				E9099C7D2E56C9C900104A64 /* LibraryTemplate.swift in Sources */,
+				E9099C752E56C95300104A64 /* PinnedView.swift in Sources */,
 				E9B7015D2E4D9E2C00A46F7A /* MealCardStateStore.swift in Sources */,
 				E9089BD02E4D0E2900309575 /* CalorieCardsApp.swift in Sources */,
 				E9099C692E5668E500104A64 /* HistoryChartView.swift in Sources */,
+				E9099C732E56903B00104A64 /* MealSetDetail.swift in Sources */,
+				E9099C792E56C97C00104A64 /* MealSetsView.swift in Sources */,
+				E9099C712E56901F00104A64 /* MealSetEditor.swift in Sources */,
 				E9099C672E5427E500104A64 /* HistoryLoader.swift in Sources */,
 				E9089BD12E4D0E2900309575 /* FoodTemplate.swift in Sources */,
 				E9089BD32E4D0E2900309575 /* ContentView.swift in Sources */,

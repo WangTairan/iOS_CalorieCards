@@ -20,7 +20,7 @@ struct HistoryListView: View {
                                 Button(role: .destructive) {
                                     onDelete(r)
                                 } label: {
-                                    Label("Delete", systemImage: "trash")
+                                    Label(String(localized: "delete"), systemImage: "trash")
                                 }
                             }
                     }

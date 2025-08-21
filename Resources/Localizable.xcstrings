@@ -14,6 +14,15 @@
         }
       }
     },
+    "%lld items" : {
+
+    },
+    "%lld kcal" : {
+
+    },
+    "× %lld" : {
+
+    },
     "0" : {
       "localizations" : {
         "en" : {
@@ -26,6 +35,25 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "0"
+          }
+        }
+      }
+    },
+    "add" : {
+
+    },
+    "add_food" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add food"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加食物"
           }
         }
       }
@@ -46,6 +74,9 @@
           }
         }
       }
+    },
+    "all_foods" : {
+
     },
     "app_title" : {
       "extractionState" : "manual",
@@ -98,6 +129,25 @@
         }
       }
     },
+    "choose_food" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Food"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择食物"
+          }
+        }
+      }
+    },
+    "choose_foods" : {
+
+    },
     "clear_history" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -133,10 +183,36 @@
       }
     },
     "confirm_delete_all_message" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete all records? This action cannot be undone."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除所有记录吗？此操作无法撤销。"
+          }
+        }
+      }
     },
     "confirm_delete_all_title" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete All Records"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有记录"
+          }
+        }
+      }
     },
     "cutoff_hour" : {
 
@@ -186,20 +262,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
-          }
-        }
-      }
-    },
-    "Delete" : {
-
-    },
-    "delete_all" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除历史"
           }
         }
       }
@@ -272,6 +334,22 @@
         }
       }
     },
+    "enter_name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入名称"
+          }
+        }
+      }
+    },
     "extra_add_kcal" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -322,6 +400,59 @@
         }
       }
     },
+    "food_name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Food name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "食物名称"
+          }
+        }
+      }
+    },
+    "food_name_exists" : {
+
+    },
+    "from_builtin" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From built-in library"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来自系统库"
+          }
+        }
+      }
+    },
+    "from_my_foods" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From my foods"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来自我的食物"
+          }
+        }
+      }
+    },
     "history" : {
       "localizations" : {
         "en" : {
@@ -351,6 +482,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图标"
+          }
+        }
+      }
+    },
+    "kcal_per_unit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kcal per unit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每单位热量"
           }
         }
       }
@@ -388,6 +535,38 @@
         }
       }
     },
+    "library" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Library"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "食物库"
+          }
+        }
+      }
+    },
+    "library_builtin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built-in foods"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统食物"
+          }
+        }
+      }
+    },
     "lunch" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -401,6 +580,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "午餐"
+          }
+        }
+      }
+    },
+    "meal_sets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meal sets"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "套餐"
+          }
+        }
+      }
+    },
+    "my_foods" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My foods"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的食物"
           }
         }
       }
@@ -422,6 +634,22 @@
         }
       }
     },
+    "new_meal_set" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New meal set"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建套餐"
+          }
+        }
+      }
+    },
     "no_history_yet" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -438,6 +666,9 @@
           }
         }
       }
+    },
+    "no_pinned" : {
+
     },
     "per_100g" : {
       "localizations" : {
@@ -504,6 +735,25 @@
         }
       }
     },
+    "pin_hint" : {
+
+    },
+    "pinned" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinned"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "置顶"
+          }
+        }
+      }
+    },
     "recent" : {
       "localizations" : {
         "en" : {
@@ -516,17 +766,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最近记录"
-          }
-        }
-      }
-    },
-    "Recent" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最近"
           }
         }
       }
@@ -544,6 +783,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        }
+      }
+    },
+    "save_failed_try_again" : {
+
+    },
+    "search" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索"
+          }
+        }
+      }
+    },
+    "set_name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set name"
           }
         }
       }
@@ -645,6 +913,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日合计"
+          }
+        }
+      }
+    },
+    "unit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单位"
           }
         }
       }

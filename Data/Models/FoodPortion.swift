@@ -1,7 +1,7 @@
-// Data/Modles/NutritionModels.swift
+// Data/Models/NutritionModels.swift
 import SwiftUI
+import Foundation
 
-/// 编辑时的一条食材条目（快照，避免直接持有 SwiftData 对象）
 struct FoodPortion: Identifiable, Hashable, Codable {
     var id = UUID()
 
@@ -10,10 +10,9 @@ struct FoodPortion: Identifiable, Hashable, Codable {
     var nameZH: String
     var unit: UnitKind
     var kcalPerUnit: Double
-
-    // 用户选择的数量
     var quantity: Double
 
+    // MARK: - 初始化
     init(template: FoodTemplate, defaultQuantity: Double) {
         self.nameEN = template.nameEN
         self.nameZH = template.nameZH
@@ -22,21 +21,33 @@ struct FoodPortion: Identifiable, Hashable, Codable {
         self.quantity = defaultQuantity
     }
 
-    /// 按单位计算热量
+    /// 从套餐条目构造（条目指向 FoodTemplate）
+    init?(item: MealSetItem) {
+        self.init(template: item.template, defaultQuantity: item.defaultQuantity)
+    }
+
+    /// 从套餐批量生成份量
+    static func fromMealSet(_ set: MealSet) -> [FoodPortion] {
+        set.items.compactMap { FoodPortion(item: $0) }
+    }
+
+    // MARK: - 计算热量
     var kcal: Double {
         switch unit {
-        case .per100g, .per100ml: return kcalPerUnit * quantity / 100.0
-        case .perPiece:           return kcalPerUnit * quantity
+        case .per100g, .per100ml:
+            return kcalPerUnit * quantity / 100.0
+        case .perPiece:
+            return kcalPerUnit * quantity
         }
     }
 
-    /// 本地化名称
+    // MARK: - 本地化显示名
     var localizedName: String {
         let isZH = Locale.preferredLanguages.first?.hasPrefix("zh") == true
         return isZH ? nameZH : nameEN
     }
 
-    /// 本地化短单位
+    // MARK: - 单位本地化
     var unitShortLocalized: String {
         let isZH = Locale.preferredLanguages.first?.hasPrefix("zh") == true
         switch unit {

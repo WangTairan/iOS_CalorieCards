@@ -5,6 +5,6 @@ import SwiftData
 struct CalorieCardsApp: App {
     var body: some Scene {
         WindowGroup { AppBootstrapper() }
-            .modelContainer(for: FoodTemplate.self)
+            .modelContainer(for: [FoodTemplate.self, MealSet.self, MealSetItem.self])
     }
 }

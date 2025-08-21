@@ -53,12 +53,19 @@ struct ExpandedKcalCard: View {
             }
         }
         .sheet(isPresented: $showingPicker) {
-            FoodPicker { food in
-                let defaultQ: Double = (food.unit == .perPiece) ? 1 : 100
-                card.items.append(FoodPortion(template: food, defaultQuantity: defaultQ))
-                persistNowAndUpdateKcal()
-            }
+            FoodPicker(
+                onSelectTemplate: { food in
+                    let q: Double = (food.unit == .perPiece) ? 1 : 100
+                    card.items.append(FoodPortion(template: food, defaultQuantity: q))
+                    persistNowAndUpdateKcal()
+                },
+                onSelectMealSet: { portions in
+                    card.items.append(contentsOf: portions)
+                    persistNowAndUpdateKcal()
+                }
+            )
         }
+
     }
 
     // MARK: - Header
