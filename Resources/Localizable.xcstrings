@@ -11,17 +11,14 @@
             "state" : "new",
             "value" : "%1$lld %2$@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$@"
+          }
         }
       }
-    },
-    "%lld items" : {
-
-    },
-    "%lld kcal" : {
-
-    },
-    "× %lld" : {
-
     },
     "0" : {
       "localizations" : {
@@ -38,9 +35,6 @@
           }
         }
       }
-    },
-    "add" : {
-
     },
     "add_food" : {
       "localizations" : {
@@ -76,7 +70,20 @@
       }
     },
     "all_foods" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Foods"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有食物"
+          }
+        }
+      }
     },
     "app_title" : {
       "extractionState" : "manual",
@@ -145,8 +152,21 @@
         }
       }
     },
-    "choose_foods" : {
-
+    "chosen_foods" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected Foods"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选食物"
+          }
+        }
+      }
     },
     "clear_history" : {
       "extractionState" : "manual",
@@ -214,9 +234,6 @@
         }
       }
     },
-    "cutoff_hour" : {
-
-    },
     "day_end" : {
       "localizations" : {
         "en" : {
@@ -262,6 +279,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
+          }
+        }
+      }
+    },
+    "delete_card" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Card"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除卡片"
           }
         }
       }
@@ -334,6 +367,38 @@
         }
       }
     },
+    "edit_card_settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Card Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑卡片设置"
+          }
+        }
+      }
+    },
+    "edit_meal_set" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Meal Set"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑套餐"
+          }
+        }
+      }
+    },
     "enter_name" : {
       "localizations" : {
         "en" : {
@@ -389,7 +454,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "food library"
+            "value" : "Food library"
           }
         },
         "zh-Hans" : {
@@ -417,38 +482,34 @@
       }
     },
     "food_name_exists" : {
-
-    },
-    "from_builtin" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "From built-in library"
+            "value" : "Food name already exists"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "来自系统库"
+            "value" : "该食物名称已存在"
           }
         }
       }
     },
-    "from_my_foods" : {
-      "extractionState" : "stale",
+    "foods" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "From my foods"
+            "value" : "Foods"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "来自我的食物"
+            "value" : "包含的食物"
           }
         }
       }
@@ -463,7 +524,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "历史"
           }
         }
@@ -600,19 +661,35 @@
         }
       }
     },
-    "my_foods" : {
-      "extractionState" : "stale",
+    "mealset_items_count %lld" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My foods"
+            "value" : "%lld items"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我的食物"
+            "value" : "%lld 个食物"
+          }
+        }
+      }
+    },
+    "move_card_right" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Card Right"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "向右移动卡片"
           }
         }
       }
@@ -639,12 +716,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "New meal set"
+            "value" : "New Meal Set"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "新建套餐"
           }
         }
@@ -668,7 +745,20 @@
       }
     },
     "no_pinned" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Pinned Foods"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有置顶的食物"
+          }
+        }
+      }
     },
     "per_100g" : {
       "localizations" : {
@@ -735,8 +825,21 @@
         }
       }
     },
-    "pin_hint" : {
-
+    "pin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "置顶"
+          }
+        }
+      }
     },
     "pinned" : {
       "localizations" : {
@@ -787,8 +890,22 @@
         }
       }
     },
-    "save_failed_try_again" : {
-
+    "save_failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存失败"
+          }
+        }
+      }
     },
     "search" : {
       "localizations" : {
@@ -812,6 +929,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "套餐名称"
+          }
+        }
+      }
+    },
+    "sets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sets"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "套餐"
           }
         }
       }
@@ -933,11 +1072,53 @@
         }
       }
     },
+    "unpin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unpin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消置顶"
+          }
+        }
+      }
+    },
     "x" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        }
+      }
     },
     "y" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "y"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "y"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

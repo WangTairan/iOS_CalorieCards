@@ -1,0 +1,8 @@
+[
+  {"key":"egg","nameZH":"鸡蛋","nameEN":"Egg","unit":"perPiece","kcalPerUnit":78},
+  {"key":"milk_whole","nameZH":"牛奶（全脂）","nameEN":"Milk (whole)","unit":"per100ml","kcalPerUnit":64},
+  {"key":"milk_semi","nameZH":"牛奶（半脱脂）","nameEN":"Milk (semi-skimmed)","unit":"per100ml","kcalPerUnit":47},
+  {"key":"milk_skimmed","nameZH":"牛奶（脱脂）","nameEN":"Milk (skimmed)","unit":"per100ml","kcalPerUnit":35},
+  {"key":"yogurt_plain","nameZH":"原味酸奶","nameEN":"Yogurt (plain)","unit":"per100g","kcalPerUnit":63}
+]
+

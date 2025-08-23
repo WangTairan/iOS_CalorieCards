@@ -38,16 +38,14 @@ struct HistoryView: View {
                         Button {
                             confirmDeleteAll = true
                         } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "trash")
-                                Text(String(localized: "clear_history"))
-                            }
-                            .foregroundStyle(.red) // ✅ 同时给图标和文字上红色
+                            Text(String(localized: "clear_history"))
+                                .foregroundStyle(.red)   // 纯文字红色
                         }
                         .buttonStyle(.borderless)
                     }
                 }
             }
+
 
             .alert(
                 Text(String(localized: "confirm_delete_all_title")),
@@ -75,7 +73,7 @@ struct HistoryView: View {
 
     private func reload() {
         let loader = HistoryLoader()
-        self.records = loader.loadAllRecords(now: Date(), tz: tz)
+        self.records = loader.loadAllRecords(now: Date())
     }
 
     private func deleteRecord(_ record: HistoryRecord) {

@@ -3,6 +3,8 @@ import SwiftData
 import Foundation
 
 enum FoodTab: String, CaseIterable { case pinned, builtin, mealSets }
+enum FoodPickerMode { case full, templatesOnly }
+
 
 struct FoodPicker: View {
     @Environment(\.dismiss) private var dismiss
@@ -11,6 +13,8 @@ struct FoodPicker: View {
     @State private var selectedTab: FoodTab = .pinned
     @State private var query = ""
     @State private var searchPresented = false
+    
+    private let mode: FoodPickerMode
 
     // 数据
     @Query private var templates: [FoodTemplate]
@@ -21,14 +25,15 @@ struct FoodPicker: View {
     let onSelectMealSet: ([FoodPortion]) -> Void
 
     init(
-        onSelectTemplate: @escaping (FoodTemplate) -> Void,
-        onSelectMealSet: @escaping ([FoodPortion]) -> Void = { _ in }
-    ) {
-        self.onSelectTemplate = onSelectTemplate
-        self.onSelectMealSet = onSelectMealSet
-        // 取数的排序无所谓，用英文名稳定一下；UI 内再按 localizedName 排序
-        _templates = Query(sort: [SortDescriptor(\FoodTemplate.nameEN)])
-    }
+            mode: FoodPickerMode = .full,
+            onSelectTemplate: @escaping (FoodTemplate) -> Void,
+            onSelectMealSet: @escaping ([FoodPortion]) -> Void = { _ in }
+        ) {
+            self.mode = mode
+            self.onSelectTemplate = onSelectTemplate
+            self.onSelectMealSet = onSelectMealSet
+            _templates = Query(sort: [SortDescriptor(\FoodTemplate.nameEN)])
+        }
 
     var body: some View {
         NavigationStack {
@@ -37,7 +42,9 @@ struct FoodPicker: View {
                     HStack(spacing: 8) {
                         tabChip(.pinned,   label: String(localized: "pinned"),         systemImage: "pin.fill")
                         tabChip(.builtin,  label: String(localized: "library_builtin"), systemImage: "books.vertical.fill")
-                        tabChip(.mealSets, label: String(localized: "meal_sets"),       systemImage: "fork.knife")
+                        if mode == .full {
+                            tabChip(.mealSets, label: String(localized: "meal_sets"), systemImage: "fork.knife")
+                        }
                     }
                     .padding(.horizontal, 12)
                     .padding(.top, 6)
@@ -56,7 +63,7 @@ struct FoodPicker: View {
                                 ForEach(builtinFiltered) { f in templateRow(f) }
                             }
                         }
-                        if !mealSetsFiltered.isEmpty {
+                        if mode == .full, !mealSetsFiltered.isEmpty {
                             Section(String(localized: "meal_sets")) {
                                 ForEach(mealSetsFiltered) { set in mealSetRow(set) }
                             }
@@ -74,7 +81,6 @@ struct FoodPicker: View {
                                 ContentUnavailableView(
                                     String(localized: "no_pinned"),
                                     systemImage: "pin.slash",
-                                    description: Text(String(localized: "pin_hint"))
                                 )
                             }
 
@@ -115,8 +121,9 @@ struct FoodPicker: View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(set.name).bold()
-                Text("\(set.items.count) items")
-                    .font(.footnote).foregroundStyle(.secondary)
+                Text("mealset_items_count \(set.items.count)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
             Spacer()
             Image(systemName: "tray.and.arrow.down.fill")

@@ -9,7 +9,7 @@ struct ExpandedKcalCard: View {
     @State private var showingPicker = false
     @State private var dragOffset: CGFloat = 0
 
-    // 绑定手动 kcal 的 TextField，手动修改后立刻更新变化
+    // 手动 kcal 文本绑定：修改即更新
     private var manualTextBinding: Binding<String> {
         Binding(
             get: { card.manualKcalText ?? "" },
@@ -17,6 +17,7 @@ struct ExpandedKcalCard: View {
         )
     }
 
+    // 总热量（项目合计 + 额外手动）
     private var totalKcal: Int {
         let sumFromItems = card.items.reduce(0.0) { $0 + $1.kcal }
         let extraManual = Int(card.manualKcalText ?? "") ?? 0
@@ -27,7 +28,7 @@ struct ExpandedKcalCard: View {
         ZStack {
             Color.black.opacity(0.2)
                 .ignoresSafeArea()
-                .onTapGesture { finish() }   // 点击幕布关闭
+                .onTapGesture { finish() } // 点击幕布关闭
 
             VStack {
                 Spacer(minLength: 0)
@@ -38,9 +39,22 @@ struct ExpandedKcalCard: View {
                         .shadow(radius: CardStyle.shadowRadius, y: CardStyle.shadowYOffset)
                         .matchedGeometryEffect(id: card.id, in: namespace, isSource: false)
 
+                    // —— 卡片内容（扁平：header + 三块 + bottomBar）——
                     VStack(spacing: 14) {
                         header
-                        contentBlock
+
+                        // 直接滚动三块内容（无中间大容器）
+                        ScrollView {
+                            VStack(spacing: 12) {
+                                if !card.items.isEmpty {
+                                    itemsSection   // 列表块
+                                }
+                                addSection        // 添加按钮块
+                                manualKcalSection // 手动 kcal 块
+                            }
+                            .padding(14)
+                        }
+
                         bottomBar
                     }
                 }
@@ -55,17 +69,22 @@ struct ExpandedKcalCard: View {
         .sheet(isPresented: $showingPicker) {
             FoodPicker(
                 onSelectTemplate: { food in
-                    let q: Double = (food.unit == .perPiece) ? 1 : 100
-                    card.items.append(FoodPortion(template: food, defaultQuantity: q))
-                    persistNowAndUpdateKcal()
+                    let exists = card.items.contains { $0.localizedName == food.localizedName }
+                    if !exists {
+                        let q: Double = (food.unit == .perPiece) ? 1 : 100
+                        card.items.append(FoodPortion(template: food, defaultQuantity: q))
+                        persistNowAndUpdateKcal()
+                    }
                 },
                 onSelectMealSet: { portions in
-                    card.items.append(contentsOf: portions)
+                    // 过滤掉重复的食物（按名字）
+                    let existingNames = Set(card.items.map { $0.localizedName })
+                    let newOnes = portions.filter { !existingNames.contains($0.localizedName) }
+                    card.items.append(contentsOf: newOnes)
                     persistNowAndUpdateKcal()
                 }
             )
         }
-
     }
 
     // MARK: - Header
@@ -93,63 +112,56 @@ struct ExpandedKcalCard: View {
         .padding(.top, 14)
     }
 
-    // MARK: - Content
-    private var contentBlock: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius, style: .continuous)
-                .fill(.ultraThinMaterial)
+    // MARK: - 三块内容（无外层大容器）
 
-            ScrollView {
-                VStack(spacing: 12) {
-                    if !card.items.isEmpty {
-                        VStack(spacing: 0) {
-                            ForEach($card.items) { $item in
-                                itemRow(item: $item)
-                                if item.id != card.items.last?.id {
-                                    Divider().padding(.leading, 12)
-                                }
-                            }
-                        }
-                        .padding(ContentBlockStyle.padding)
-                        .background(
-                            RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius)
-                                .fill(.thinMaterial)
-                        )
-                    }
-
-                    Button {
-                        showingPicker = true
-                    } label: {
-                        Label(LocalizedStringKey("add_from_food_library"), systemImage: "plus.circle")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(ContentBlockStyle.padding)
-                    .background(
-                        RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius)
-                            .fill(.thinMaterial)
-                    )
-
-                    HStack {
-                        Text(LocalizedStringKey("extra_add_kcal")).foregroundStyle(.secondary)
-                        Spacer()
-                        TextField("0", text: manualTextBinding)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 90)
-                        Text(LocalizedStringKey("kcal_unit")).foregroundStyle(.secondary)
-                    }
-                    .padding(ContentBlockStyle.padding)
-                    .background(
-                        RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius)
-                            .fill(.thinMaterial)
-                    )
+    /// 列表块：已添加的食物行
+    private var itemsSection: some View {
+        VStack(spacing: 0) {
+            ForEach($card.items) { $item in
+                itemRow(item: $item)
+                if item.id != card.items.last?.id {
+                    Divider().padding(.leading, 12)
                 }
-                .padding(14)
             }
         }
-        .padding(.horizontal, 14)
-        .padding(.bottom, 14)
-        .frame(maxHeight: .infinity, alignment: .top)
+        .padding(ContentBlockStyle.padding)
+        .background(
+            RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius)
+                .fill(.thinMaterial)
+        )
+    }
+
+    /// 添加按钮块
+    private var addSection: some View {
+        Button {
+            showingPicker = true
+        } label: {
+            Label(LocalizedStringKey("add_from_food_library"), systemImage: "plus.circle")
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(ContentBlockStyle.padding)
+        .background(
+            RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius)
+                .fill(.thinMaterial)
+        )
+    }
+
+    /// 手动 kcal 块
+    private var manualKcalSection: some View {
+        HStack {
+            Text(LocalizedStringKey("extra_add_kcal")).foregroundStyle(.secondary)
+            Spacer()
+            TextField("0", text: manualTextBinding)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.trailing)
+                .frame(width: 90)
+            Text(LocalizedStringKey("kcal_unit")).foregroundStyle(.secondary)
+        }
+        .padding(ContentBlockStyle.padding)
+        .background(
+            RoundedRectangle(cornerRadius: ContentBlockStyle.cornerRadius)
+                .fill(.thinMaterial)
+        )
     }
 
     // MARK: - Bottom Bar
@@ -264,6 +276,7 @@ struct ExpandedKcalCard: View {
                     }
                 } label: {
                     Image(systemName: "trash")
+                            .foregroundColor(.red)   // ✅ 强制红色
                 }
                 .tint(.red)
                 .buttonStyle(.plain)

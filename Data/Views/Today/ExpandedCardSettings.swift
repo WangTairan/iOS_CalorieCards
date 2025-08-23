@@ -120,7 +120,8 @@ struct ExpandedCardSettings: View {
                         }
                     }
                     TextField("", text: $nameText)
-                        .textInputAutocapitalization(.words)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
                         .autocorrectionDisabled()
                         .focused($nameFocused)
                         .onSubmit { _ = validateName() }

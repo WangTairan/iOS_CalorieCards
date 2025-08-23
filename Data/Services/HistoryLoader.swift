@@ -1,77 +1,71 @@
-import SwiftUI
-import Charts
+import Foundation
 
 final class HistoryLoader {
-    static let prefix = "mealcards."
     private let ud = UserDefaults.standard
+    private let prefix = "mealcards."
 
-    func loadAllRecords(now: Date = Date(), tz: TimeZone = .current) -> [HistoryRecord] {
-        // 1) 找出所有 mealcards.* key
-        let keys = ud.dictionaryRepresentation().keys
-            .filter { $0.hasPrefix(Self.prefix) }
+    func loadAllRecords(now: Date = Date()) -> [HistoryRecord] {
+        let mgr = DayCycleManager.shared
+        let currentCycleKey = mgr.currentCycleKey()
 
-        // 2) 解析为 (startDate, cutoffHour, key)
-        var items: [(key: String, start: Date, cutoff: Int, totalKcal: Int)] = []
+        // 1) 找到所有 mealcards.* 的 key，并解析出 start（来自 key 的 ISO8601）
+        let fmt = ISO8601DateFormatter()
+        fmt.formatOptions = [.withInternetDateTime, .withColonSeparatorInTime, .withDashSeparatorInDate]
 
-        for k in keys {
-            guard let (start, cutoff) = Self.parseCycleKey(from: k, tz: tz) else { continue }
-            guard let cards: [MealCard] = decodeCards(for: k) else { continue }
-            let total = cards.reduce(0) { $0 + $1.kcal }
-            items.append((k, start, cutoff, total))
+        struct Entry {
+            let storageKey: String   // 例如 "mealcards.2025-08-22T02:00:00Z"
+            let start: Date
+            let cards: [MealCard]?   // 该天的卡片
+            let isCurrent: Bool
         }
 
-        // 3) 按 start 升序
-        items.sort { $0.start < $1.start }
+        var entries: [Entry] = []
 
-        // 4) 计算 end：下一条的 start；最后一条若“覆盖 now”，则 end=now，否则 end= start + 24h（保底）
+        for key in ud.dictionaryRepresentation().keys where key.hasPrefix(prefix) {
+            let iso = String(key.dropFirst(prefix.count))
+            guard let start = fmt.date(from: iso) else { continue }
+            let cards = (ud.data(forKey: key)).flatMap { try? JSONDecoder().decode([MealCard].self, from: $0) }
+            let isCurrent = (iso == currentCycleKey)
+            entries.append(Entry(storageKey: key, start: start, cards: cards, isCurrent: isCurrent))
+        }
+
+        // 没有任何 key：返回空
+        if entries.isEmpty { return [] }
+
+        // 2) 按 start 升序排序
+        entries.sort { $0.start < $1.start }
+
+        // 3) 生成 HistoryRecord（历史 end = 下一条 start；当前 end = min(now, nextSwitch)）
         var records: [HistoryRecord] = []
-        for (idx, it) in items.enumerated() {
-            let start = it.start
-            let nextStart = (idx + 1 < items.count) ? items[idx + 1].start : nil
-            let end: Date? = {
-                if let ns = nextStart {
-                    return ns
+        for (i, e) in entries.enumerated() {
+            let end: Date = {
+                if i + 1 < entries.count {
+                    return entries[i + 1].start       // 下一天开始 = 本天结束
                 } else {
-                    // 最后一条：如果 now >= start，认为进行中 → end=now；否则给一个兜底 24h
-                    return (now >= start) ? now : Calendar.current.date(byAdding: .hour, value: 24, to: start)
+                    // 最后一条
+                    if e.isCurrent {
+                        return min(now, mgr.nextSwitch)
+                    } else {
+                        // 兜底：没遇到过，但以 24h 做结束，避免 duration=0
+                        return e.start.addingTimeInterval(24 * 3600)
+                    }
                 }
             }()
 
-            records.append(HistoryRecord(key: it.key, start: start, end: end, totalKcal: it.totalKcal))
+            let total = (e.cards ?? []).reduce(0) { $0 + $1.kcal }
+            records.append(
+                HistoryRecord(
+                    key: e.storageKey,
+                    start: e.start,
+                    end: end,
+                    totalKcal: total
+                )
+            )
         }
 
         return records
     }
 
-    private func decodeCards(for key: String) -> [MealCard]? {
-        guard let data = ud.data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode([MealCard].self, from: data)
-    }
-
-    /// 从 "mealcards.YYYY-MM-DD@HHh" 解析出开始日期与小时
-    static func parseCycleKey(from key: String, tz: TimeZone) -> (Date, Int)? {
-        guard key.hasPrefix(prefix) else { return nil }
-        let tail = String(key.dropFirst(prefix.count)) // "YYYY-MM-DD@HHh"
-        let parts = tail.split(separator: "@")
-        guard parts.count == 2 else { return nil }
-        let dateStr = String(parts[0]) // "YYYY-MM-DD"
-        let hourStr = String(parts[1]).replacingOccurrences(of: "h", with: "")
-        guard let cutoff = Int(hourStr) else { return nil }
-
-        var comps = DateComponents()
-        comps.calendar = Calendar(identifier: .gregorian)
-        comps.timeZone = tz
-        let ymd = dateStr.split(separator: "-").compactMap { Int($0) }
-        guard ymd.count == 3 else { return nil }
-        comps.year = ymd[0]; comps.month = ymd[1]; comps.day = ymd[2]
-        comps.hour = cutoff; comps.minute = 0; comps.second = 0
-        return comps.date.map { ($0, cutoff) }
-    }
-}
-
-
-extension HistoryLoader {
-    /// 删除一条历史记录
     func delete(_ record: HistoryRecord) {
         ud.removeObject(forKey: record.key)
     }

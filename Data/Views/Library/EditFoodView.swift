@@ -85,7 +85,7 @@ struct EditFoodView: View {
             try context.save()
             dismiss()
         } catch {
-            errorMessage = String(localized: "save_failed_try_again")
+            errorMessage = String(localized: "save_failed")
             print("EditFood save error:", error)
         }
     }

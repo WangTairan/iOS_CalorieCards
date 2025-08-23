@@ -6,7 +6,6 @@ struct PinnedView: View {
     @State private var query = ""
 
     init() {
-        // 先按英文名取回，UI 再按 localizedName 排序，避免顺序抖动
         _templates = Query(sort: [SortDescriptor(\FoodTemplate.nameEN, order: .forward)])
     }
 
@@ -20,19 +19,25 @@ struct PinnedView: View {
 
     var body: some View {
         List {
-            if pinnedFiltered.isEmpty {
-                ContentUnavailableView(
-                    String(localized: "no_pinned"),
-                    systemImage: "pin.slash",
-                    description: Text(String(localized: "pin_hint"))
-                )
-            } else {
-                ForEach(pinnedFiltered) { food in
-                    LibraryRowTemplate(food: food)
+            Section(String(localized: "content")) {
+                if pinnedFiltered.isEmpty {
+                    Text(String(localized: "no_pinned"))
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowSeparator(.hidden)   // ❌ 空态不需要分割线
+                } else {
+                    ForEach(pinnedFiltered) { food in
+                        LibraryRowTemplate(food: food)
+                            .listRowSeparator(.visible)                   // ✅ 明确显示
+                            .listRowSeparatorTint(.secondary.opacity(0.3)) // ✅ 颜色微调
+                    }
                 }
             }
         }
+        .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
         .navigationTitle(String(localized: "pinned"))
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(
             text: $query,
             placement: .navigationBarDrawer(displayMode: .always),

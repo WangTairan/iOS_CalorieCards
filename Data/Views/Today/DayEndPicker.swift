@@ -20,13 +20,12 @@ struct DayEndPicker: View {
                 .foregroundStyle(.secondary)
 
             // 选择器（0~23）
-            Picker(selection: $selectedHour) {
+            Picker("", selection: $selectedHour) {
                 ForEach(0..<24) { h in
                     Text(hourLabel(h)).tag(h)
                 }
-            } label: {
-                Text(String(localized: "cutoff_hour"))
             }
+            .labelsHidden()
             .pickerStyle(.wheel)
             .frame(maxWidth: .infinity, minHeight: 160, alignment: .center)
 

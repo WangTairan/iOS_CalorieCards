@@ -7,16 +7,26 @@ struct LibraryRowTemplate: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(food.nameEN).bold()
-                Text(food.unitLabel).font(.footnote).foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(food.localizedName).bold()
+                Text(food.unitLabel)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
             Spacer()
-            Text("\(Int(food.kcalPerUnit)) kcal").monospacedDigit().foregroundStyle(.secondary)
+            Text("\(Int(food.kcalPerUnit)) \(String(localized: "kcal_unit"))")
+                .monospacedDigit()
+                .foregroundStyle(.secondary)
+
             Button {
-                food.isPinned.toggle(); try? context.save()
-            } label: { Image(systemName: food.isPinned ? "pin.fill" : "pin") }
+                food.isPinned.toggle()
+                try? context.save()
+            } label: {
+                Image(systemName: food.isPinned ? "pin.fill" : "pin")
+                    .foregroundColor(food.isPinned ? .orange : .secondary) // ✅ 橙色 pinned
+            }
             .buttonStyle(.plain)
+            .padding(.leading, 6)
         }
     }
 }

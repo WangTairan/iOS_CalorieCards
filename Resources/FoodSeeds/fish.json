@@ -1,0 +1,13 @@
+[
+    { "nameZH": "鳕鱼片（生）", "nameEN": "Cod fillet (raw)", "unit": "per100g", "kcalPerUnit": 82 },
+    { "nameZH": "黑线鳕片（生）", "nameEN": "Haddock fillet (raw)", "unit": "per100g", "kcalPerUnit": 90 },
+    { "nameZH": "三文鱼片（生）", "nameEN": "Salmon fillet (raw)", "unit": "per100g", "kcalPerUnit": 208 },
+    { "nameZH": "鳟鱼片（生）", "nameEN": "Trout fillet (raw)", "unit": "per100g", "kcalPerUnit": 141 },
+    { "nameZH": "鲭鱼片（生）", "nameEN": "Mackerel fillet (raw)", "unit": "per100g", "kcalPerUnit": 205 },
+    { "nameZH": "沙丁鱼（生）", "nameEN": "Sardines (raw)", "unit": "per100g", "kcalPerUnit": 134 },
+    { "nameZH": "黄鳍金枪鱼（生）", "nameEN": "Yellowfin tuna (raw)", "unit": "per100g", "kcalPerUnit": 109 },
+    { "nameZH": "比目鱼片（生）", "nameEN": "Plaice fillet (raw)", "unit": "per100g", "kcalPerUnit": 90 },
+    { "nameZH": "巴沙鱼片（生）", "nameEN": "Basa fillet (raw)", "unit": "per100g", "kcalPerUnit": 97 },
+    { "nameZH": "鲤鱼（生）", "nameEN": "Carp (raw)", "unit": "per100g", "kcalPerUnit": 127 },
+    { "nameZH": "白鱼片（生）", "nameEN": "White fish fillet (raw)", "unit": "per100g", "kcalPerUnit": 92 }
+]

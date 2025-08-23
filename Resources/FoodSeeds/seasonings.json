@@ -1,0 +1,24 @@
+[
+    { "nameZH": "植物油", "nameEN": "Vegetable oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "橄榄油", "nameEN": "Olive oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "特级初榨橄榄油", "nameEN": "Extra virgin olive oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "葵花籽油", "nameEN": "Sunflower oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "菜籽油", "nameEN": "Rapeseed oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "花生油", "nameEN": "Peanut oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "芝麻油", "nameEN": "Sesame oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "椰子油", "nameEN": "Coconut oil", "unit": "per100g", "kcalPerUnit": 884 },
+    { "nameZH": "黄油", "nameEN": "Butter", "unit": "per100g", "kcalPerUnit": 717 },
+    { "nameZH": "人造黄油", "nameEN": "Margarine", "unit": "per100g", "kcalPerUnit": 600 },
+
+
+
+    { "nameZH": "盐", "nameEN": "Salt", "unit": "per100g", "kcalPerUnit": 0 },
+    { "nameZH": "白砂糖", "nameEN": "White sugar", "unit": "per100g", "kcalPerUnit": 387 },
+    { "nameZH": "红糖", "nameEN": "Brown sugar", "unit": "per100g", "kcalPerUnit": 380 },
+    { "nameZH": "蜂蜜", "nameEN": "Honey", "unit": "per100g", "kcalPerUnit": 304 },
+    { "nameZH": "酱油", "nameEN": "Soy sauce", "unit": "per100g", "kcalPerUnit": 53 },
+    { "nameZH": "蚝油", "nameEN": "Oyster sauce", "unit": "per100g", "kcalPerUnit": 120 },
+    { "nameZH": "番茄酱", "nameEN": "Ketchup", "unit": "per100g", "kcalPerUnit": 110 },
+    { "nameZH": "蛋黄酱", "nameEN": "Mayonnaise", "unit": "per100g", "kcalPerUnit": 720 },
+    { "nameZH": "醋", "nameEN": "Vinegar", "unit": "per100g", "kcalPerUnit": 21 }
+]

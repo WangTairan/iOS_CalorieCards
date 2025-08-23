@@ -6,14 +6,7 @@ struct LibraryView: View {
         NavigationStack {
             List {
                 NavigationLink {
-                    PinnedView()
-                } label: {
-                    LibraryEntryRow(title: String(localized: "pinned"),
-                                    systemImage: "pin.fill")
-                }
-
-                NavigationLink {
-                    AllFoodsView() // ← 合并后的入口
+                    AllFoodsView()
                 } label: {
                     LibraryEntryRow(title: String(localized: "food_library"),
                                     systemImage: "books.vertical.fill")
@@ -26,7 +19,11 @@ struct LibraryView: View {
                                     systemImage: "fork.knife")
                 }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)         // ✅ 透明背景
+            .listRowSeparator(.visible)               // ✅ 分割线可见
             .navigationTitle(String(localized: "library"))
+            .navigationBarTitleDisplayMode(.inline)   // ✅ inline 标题
         }
     }
 }
@@ -43,11 +40,10 @@ private struct LibraryEntryRow: View {
                 .padding(10)
                 .background(Color.blue, in: RoundedRectangle(cornerRadius: 12))
 
-            Text(title).font(.headline)
+            Text(title)
+                .font(.headline)
 
-            Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.secondary)
+            Spacer() // NavigationLink 自带 chevron，不要重复
         }
         .contentShape(Rectangle())
     }

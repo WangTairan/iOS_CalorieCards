@@ -1,0 +1,19 @@
+[
+    { "nameZH": "西兰花", "nameEN": "Broccoli", "unit": "per100g", "kcalPerUnit": 34 },
+    { "nameZH": "胡萝卜", "nameEN": "Carrot", "unit": "per100g", "kcalPerUnit": 41 },
+    { "nameZH": "西红柿", "nameEN": "Tomato", "unit": "per100g", "kcalPerUnit": 18 },
+    { "nameZH": "黄瓜", "nameEN": "Cucumber", "unit": "per100g", "kcalPerUnit": 16 },
+    { "nameZH": "菠菜", "nameEN": "Spinach", "unit": "per100g", "kcalPerUnit": 23 },
+    { "nameZH": "生菜", "nameEN": "Lettuce", "unit": "per100g", "kcalPerUnit": 15 },
+    { "nameZH": "卷心菜", "nameEN": "Cabbage", "unit": "per100g", "kcalPerUnit": 25 },
+    { "nameZH": "洋葱", "nameEN": "Onion", "unit": "per100g", "kcalPerUnit": 40 },
+    { "nameZH": "土豆", "nameEN": "Potato", "unit": "per100g", "kcalPerUnit": 77 },
+    { "nameZH": "茄子", "nameEN": "Aubergine", "unit": "per100g", "kcalPerUnit": 25 },
+    { "nameZH": "青椒", "nameEN": "Green pepper", "unit": "per100g", "kcalPerUnit": 20 },
+    { "nameZH": "红椒", "nameEN": "Red pepper", "unit": "per100g", "kcalPerUnit": 31 },
+    { "nameZH": "蘑菇", "nameEN": "Mushroom", "unit": "per100g", "kcalPerUnit": 22 },
+    { "nameZH": "芹菜", "nameEN": "Celery", "unit": "per100g", "kcalPerUnit": 16 },
+    { "nameZH": "南瓜", "nameEN": "Pumpkin", "unit": "per100g", "kcalPerUnit": 26 },
+    { "nameZH": "大白菜", "nameEN": "Chinese leaf", "unit": "per100g", "kcalPerUnit": 13 },
+    { "nameZH": "白萝卜", "nameEN": "Mooli", "unit": "per100g", "kcalPerUnit": 18 }
+]

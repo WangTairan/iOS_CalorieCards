@@ -3,8 +3,9 @@ import SwiftUI
 struct CardView: View {
     let card: MealCard
     var isEditing: Bool = false
-    var onDelete: (() -> Void)? = nil
+    var onDelete:   (() -> Void)? = nil
     var onSettings: (() -> Void)? = nil
+    var onMoveRight:(() -> Void)? = nil   // ✅ 新增：向右移动
 
     // 基准：左上角小图标的视觉尺寸
     private let cornerIconSide: CGFloat = 28
@@ -44,41 +45,53 @@ struct CardView: View {
             }
             .padding(contentPadding)
 
-            // 编辑态：右上角纵向按钮，与左上角图标完全同尺寸 & 同上边距
+            // 编辑态：右上角“纵向三颗”小圆按钮
             if isEditing {
                 VStack(spacing: 8) {
-                    // 删除（红色，顶上）——与左上角完全相同的两层结构
-                    Button {
-                        onDelete?()
-                    } label: {
+                    // 删除（红色）
+                    Button { onDelete?() } label: {
                         ZStack {
-                            Circle().fill(Color.white.opacity(0.2)) // 外圈同样的浅白圆
-                            Image(systemName: "trash")               // 纯符号，不要 *.circle.fill 变体
-                                .font(.system(size: 14, weight: .semibold)) // 和左上角一致
-                                .foregroundStyle(.red)                       // 只改颜色为红色
+                            Circle().fill(Color.white.opacity(0.2))
+                            Image(systemName: "trash")
+                                .font(.system(size: cornerIconFontSize, weight: .semibold))
+                                .foregroundStyle(.red)
                                 .symbolRenderingMode(.monochrome)
                         }
-                        .frame(width: 28, height: 28)               // 和左上角一致
+                        .frame(width: cornerIconSide, height: cornerIconSide)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(Text(String(localized: "delete_card")))
 
-                    // 设置（白色，在下）——同结构
-                    Button {
-                        onSettings?()
-                    } label: {
+                    // 设置（白色）
+                    Button { onSettings?() } label: {
                         ZStack {
                             Circle().fill(Color.white.opacity(0.2))
                             Image(systemName: "gearshape")
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: cornerIconFontSize, weight: .semibold))
                                 .foregroundStyle(.white)
                                 .symbolRenderingMode(.monochrome)
                         }
-                        .frame(width: 28, height: 28)
+                        .frame(width: cornerIconSide, height: cornerIconSide)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(Text(String(localized: "edit_card_settings")))
+
+                    // ✅ 向右移动（白色）——第三个
+                    Button { onMoveRight?() } label: {
+                        ZStack {
+                            Circle().fill(Color.white.opacity(0.2))
+                            Image(systemName: "arrow.right")
+                                .font(.system(size: cornerIconFontSize, weight: .semibold))
+                                .foregroundStyle(.white)
+                                .symbolRenderingMode(.monochrome)
+                        }
+                        .frame(width: cornerIconSide, height: cornerIconSide)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(String(localized: "move_card_right")))
                 }
-                .padding(.top, 14)       // 和内容区 padding 对齐
-                .padding(.trailing, 14)  // 右上角定位
+                .padding(.top, contentPadding)      // 与内容区 padding 对齐
+                .padding(.trailing, contentPadding) // 右上角定位
             }
         }
         .contentShape(RoundedRectangle(cornerRadius: 18))

@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 // 供 ContentView 发出“点击任何非卡片区域关闭”用
 extension Notification.Name {
@@ -6,7 +7,6 @@ extension Notification.Name {
 }
 
 struct TodayView: View {
-    // 外层（ContentView）用它来判断是否需要禁用底部自定义导航栏
     @Binding var hasOverlay: Bool
 
     @State private var cards: [MealCard] = [
@@ -22,16 +22,16 @@ struct TodayView: View {
     @State private var settingsIndex: Int? = nil
 
     @State private var showingCutoffPicker = false
-    @State private var pendingCutoffHour = DayRollover.cutoffHour
+    @State private var pendingCutoffHour = DayCycleManager.shared.currentCutoff
 
     @Namespace private var cardNS
 
-    // 动画参数
     private let springResponse: Double = 0.38
     private let springDamping: Double  = 0.86
 
-    // 局部遮罩开关（用于控制主内容是否可点）
     @State private var overlayActive: Bool = false
+    @State private var cycleKey = DayCycleManager.shared.currentCycleKey()
+    @State private var cancellables = Set<AnyCancellable>()
 
     private var totalKcal: Int { cards.reduce(0) { $0 + $1.kcal } }
     private let columns: [GridItem] = [
@@ -39,7 +39,6 @@ struct TodayView: View {
         GridItem(.flexible(), spacing: 12)
     ]
 
-    // 只要有任一 overlay 内容，就认为有遮罩
     private var showingOverlayContent: Bool { expandedIndex != nil || settingsIndex != nil || isCreating }
     private var hasAnyOverlayLocal: Bool { overlayActive || showingOverlayContent }
 
@@ -58,10 +57,10 @@ struct TodayView: View {
                 }
                 .allowsHitTesting(!hasAnyOverlayLocal)
 
-                // ===== 幕布（覆盖内容区域；全屏关闭由 ContentView 额外加一层处理） =====
+                // ===== 幕布 =====
                 if showingOverlayContent {
                     Color.black.opacity(0.25)
-                        .ignoresSafeArea() // 覆盖可滚动区域；顶栏/底栏全屏关闭交由外层
+                        .ignoresSafeArea()
                         .contentShape(Rectangle())
                         .onTapGesture { closeOverlayAnimated() }
                         .transition(.opacity)
@@ -132,38 +131,29 @@ struct TodayView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
         }
-        // 截止时间选择器
         .sheet(isPresented: $showingCutoffPicker) {
             DayEndPicker(
                 selectedHour: $pendingCutoffHour,
                 onCancel: { showingCutoffPicker = false },
                 onSave: {
-                    DayRollover.cutoffHour = pendingCutoffHour
+                    DayCycleManager.shared.setCutoff(to: pendingCutoffHour)
                     MealCardStateStore.shared.saveAll(cards: cards)
                     showingCutoffPicker = false
                 }
             )
             .presentationDetents([.height(320), .medium])
         }
-        // 同步外层禁用状态
         .onAppear {
-            self.cards = MealCardStateStore.shared.loadOrInitCards()
+            DayCycleManager.shared.tick()
+            cards = MealCardStateStore.shared.loadOrInitCards()
+            cycleKey = DayCycleManager.shared.currentCycleKey()
             hasOverlay = hasAnyOverlayLocal
         }
-        .onDisappear {
-            hasOverlay = false
-        }
-        .onChange(of: showingOverlayContent) { v in
-            hasOverlay = v || overlayActive
-        }
-        .onChange(of: overlayActive) { v in
-            hasOverlay = v || showingOverlayContent
-        }
-        // 接收外层全屏点击关闭的通知（覆盖标题栏/底部栏的点击）
+        .onDisappear { hasOverlay = false }
+        .onChange(of: showingOverlayContent) { v in hasOverlay = v || overlayActive }
+        .onChange(of: overlayActive) { v in hasOverlay = v || showingOverlayContent }
         .onReceive(NotificationCenter.default.publisher(for: .closeTodayOverlay)) { _ in
-            if hasAnyOverlayLocal {
-                closeOverlayAnimated()
-            }
+            if hasAnyOverlayLocal { closeOverlayAnimated() }
         }
     }
 
@@ -193,7 +183,8 @@ struct TodayView: View {
                                 settingsIndex = idx
                             }
                         }
-                    }
+                    },
+                    onMoveRight: { moveRight(at: idx) }   // ✅ 新增
                 )
                 .aspectRatio(1, contentMode: .fit)
                 .matchedGeometryEffect(id: cards[idx].id, in: cardNS, isSource: expandedIndex != idx)
@@ -234,6 +225,61 @@ struct TodayView: View {
         }
     }
 
+    // MARK: - Actions
+    private func deleteCard(at index: Int) {
+        withAnimation(.easeInOut) {
+            if expandedIndex == index { expandedIndex = nil }
+            if let ex = expandedIndex, ex > index { expandedIndex = ex - 1 }
+            cards.remove(at: index)
+        }
+        MealCardStateStore.shared.saveAll(cards: cards)
+    }
+
+    /// ✅ 新增：向右移动卡片
+    private func moveRight(at index: Int) {
+        withAnimation(.easeInOut) {
+            guard !cards.isEmpty else { return }
+            if index == cards.count - 1 {
+                // 最后一个 → 移动到开头
+                let last = cards.removeLast()
+                cards.insert(last, at: 0)
+            } else {
+                cards.swapAt(index, index + 1)
+            }
+        }
+        MealCardStateStore.shared.saveAll(cards: cards)
+    }
+
+    // MARK: - Close helpers
+    private func closeOverlayAnimated() {
+        withAnimation(.spring(response: springResponse, dampingFraction: springDamping)) {
+            expandedIndex = nil
+            settingsIndex = nil
+            isCreating = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + springResponse) {
+            overlayActive = false
+        }
+    }
+
+    private func closeSettingsAnimated() {
+        withAnimation(.spring(response: springResponse, dampingFraction: springDamping)) {
+            settingsIndex = nil
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + springResponse) {
+            overlayActive = false
+        }
+    }
+
+    private func closeCreateAnimated() {
+        withAnimation(.spring(response: springResponse, dampingFraction: springDamping)) {
+            isCreating = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + springResponse) {
+            overlayActive = false
+        }
+    }
+
     // MARK: - Tap Gesture
     private var tapToExitEditing: some Gesture {
         TapGesture().onEnded {
@@ -248,7 +294,7 @@ struct TodayView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             Button {
-                pendingCutoffHour = DayRollover.cutoffHour
+                pendingCutoffHour = DayCycleManager.shared.currentCutoff
                 showingCutoffPicker = true
             } label: {
                 HStack(spacing: 6) {
@@ -272,47 +318,5 @@ struct TodayView: View {
             .controlSize(.regular)
             .disabled(hasAnyOverlayLocal)
         }
-    }
-
-    // MARK: - Close helpers
-    private func closeOverlayAnimated() {
-        withAnimation(.spring(response: springResponse, dampingFraction: springDamping)) {
-            expandedIndex = nil
-            settingsIndex = nil
-            isCreating = false
-        }
-        // 稍后复位本地 overlayActive，同时外层 hasOverlay 会在 .onChange 中被同步
-        DispatchQueue.main.asyncAfter(deadline: .now() + springResponse) {
-            overlayActive = false
-        }
-        // 若正在编辑但没有任何 overlay，则点击外部不应退出编辑；保持现状
-    }
-
-    private func closeSettingsAnimated() {
-        withAnimation(.spring(response: springResponse, dampingFraction: springDamping)) {
-            settingsIndex = nil
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + springResponse) {
-            overlayActive = false
-        }
-    }
-
-    private func closeCreateAnimated() {
-        withAnimation(.spring(response: springResponse, dampingFraction: springDamping)) {
-            isCreating = false
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + springResponse) {
-            overlayActive = false
-        }
-    }
-
-    // MARK: - Actions
-    private func deleteCard(at index: Int) {
-        withAnimation(.easeInOut) {
-            if expandedIndex == index { expandedIndex = nil }
-            if let ex = expandedIndex, ex > index { expandedIndex = ex - 1 }
-            cards.remove(at: index)
-        }
-        MealCardStateStore.shared.saveAll(cards: cards)
     }
 }

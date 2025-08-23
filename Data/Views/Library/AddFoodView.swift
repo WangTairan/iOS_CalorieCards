@@ -17,6 +17,8 @@ struct AddFoodView: View {
             Form {
                 Section {
                     TextField(String(localized: "food_name"), text: $name)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
                     Picker(String(localized: "unit"), selection: $unit) {
                         ForEach(UnitKind.allCases, id: \.self) { Text(unitLocalized($0)) }
                     }
@@ -65,7 +67,7 @@ struct AddFoodView: View {
             try context.save()
             dismiss()
         } catch {
-            errorMessage = String(localized: "save_failed_try_again")
+            errorMessage = String(localized: "save_failed")
             print("AddFood save error:", error)
         }
     }
