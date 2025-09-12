@@ -1,7 +1,6 @@
 import SwiftUI
 import Combine
 
-// 供 ContentView 发出“点击任何非卡片区域关闭”用
 extension Notification.Name {
     static let closeTodayOverlay = Notification.Name("closeTodayOverlay")
 }
@@ -21,11 +20,7 @@ struct TodayView: View {
     @State private var isCreating = false
     @State private var settingsIndex: Int? = nil
 
-    @State private var showingCutoffPicker = false
-    @State private var pendingCutoffHour = DayCycleManager.shared.currentCutoff
-
     @Namespace private var cardNS
-
     private let springResponse: Double = 0.38
     private let springDamping: Double  = 0.86
 
@@ -33,7 +28,18 @@ struct TodayView: View {
     @State private var cycleKey = DayCycleManager.shared.currentCycleKey()
     @State private var cancellables = Set<AnyCancellable>()
 
-    private var totalKcal: Int { cards.reduce(0) { $0 + $1.kcal } }
+    // 目标值
+    @AppStorage(AppKeys.dailyKcalGoal)    private var dailyKcalGoal: Int = 2000
+    @AppStorage(AppKeys.dailyProteinGoal) private var dailyProteinGoal: Int = 125   // 2000kcal * 25% / 4 = 125g
+    @AppStorage(AppKeys.dailyCarbGoal)    private var dailyCarbGoal: Int = 250      // 2000kcal * 50% / 4 = 250g
+    @AppStorage(AppKeys.dailyFatGoal)     private var dailyFatGoal: Int = 56        // 2000kcal * 25% / 9 ≈ 55.5
+
+    // 当日摄入（从卡片汇总）
+    private var totalKcal: Int    { cards.reduce(0) { $0 + $1.kcal } }
+    private var totalProtein: Int { cards.reduce(0) { $0 + $1.protein } }  // 需要 MealCard 有 protein
+    private var totalCarb: Int    { cards.reduce(0) { $0 + $1.carb } }     // 需要 MealCard 有 carb
+    private var totalFat: Int     { cards.reduce(0) { $0 + $1.fat } }      // 需要 MealCard 有 fat
+
     private let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 12),
         GridItem(.flexible(), spacing: 12)
@@ -45,10 +51,9 @@ struct TodayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // ===== 背景内容 =====
                 ScrollView {
                     VStack(spacing: 16) {
-                        headerBar
+                        goalBar
                         gridSection
                     }
                     .padding(16)
@@ -57,7 +62,6 @@ struct TodayView: View {
                 }
                 .allowsHitTesting(!hasAnyOverlayLocal)
 
-                // ===== 幕布 =====
                 if showingOverlayContent {
                     Color.black.opacity(0.25)
                         .ignoresSafeArea()
@@ -67,13 +71,15 @@ struct TodayView: View {
                         .zIndex(1)
                 }
 
-                // ===== 展开卡片 =====
                 if let idx = expandedIndex {
                     ExpandedKcalCard(
                         card: $cards[idx],
                         namespace: cardNS,
-                        onFinish: { newKcal in
-                            cards[idx].kcal = newKcal
+                        onFinish: { kcal, protein, carb, fat in
+                            cards[idx].kcal    = kcal
+                            cards[idx].protein = protein
+                            cards[idx].carb    = carb
+                            cards[idx].fat     = fat
                             MealCardStateStore.shared.saveAll(cards: cards)
                             closeOverlayAnimated()
                         },
@@ -85,7 +91,6 @@ struct TodayView: View {
                     .zIndex(2)
                 }
 
-                // ===== 设置面板 =====
                 if let sidx = settingsIndex {
                     ExpandedCardSettings(
                         draft: cards[sidx],
@@ -106,7 +111,6 @@ struct TodayView: View {
                     .zIndex(2)
                 }
 
-                // ===== 新建面板 =====
                 if isCreating {
                     ExpandedCardSettings(
                         draft: MealCard(
@@ -131,18 +135,6 @@ struct TodayView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
         }
-        .sheet(isPresented: $showingCutoffPicker) {
-            DayEndPicker(
-                selectedHour: $pendingCutoffHour,
-                onCancel: { showingCutoffPicker = false },
-                onSave: {
-                    DayCycleManager.shared.setCutoff(to: pendingCutoffHour)
-                    MealCardStateStore.shared.saveAll(cards: cards)
-                    showingCutoffPicker = false
-                }
-            )
-            .presentationDetents([.height(320), .medium])
-        }
         .onAppear {
             DayCycleManager.shared.tick()
             cards = MealCardStateStore.shared.loadOrInitCards()
@@ -150,22 +142,123 @@ struct TodayView: View {
             hasOverlay = hasAnyOverlayLocal
         }
         .onDisappear { hasOverlay = false }
-        .onChange(of: showingOverlayContent) { v in hasOverlay = v || overlayActive }
-        .onChange(of: overlayActive) { v in hasOverlay = v || showingOverlayContent }
+        .onChange(of: showingOverlayContent) {
+            hasOverlay = overlayActive || showingOverlayContent
+        }
+        .onChange(of: overlayActive) {
+            hasOverlay = overlayActive || showingOverlayContent
+        }
         .onReceive(NotificationCenter.default.publisher(for: .closeTodayOverlay)) { _ in
             if hasAnyOverlayLocal { closeOverlayAnimated() }
         }
     }
 
-    // MARK: - Header
-    private var headerBar: some View {
-        HStack {
-            Text(String(localized: "total_today")).font(.headline)
-            Spacer()
-            Text("kcal_with_unit \(Int64(totalKcal))")
-                .font(.title2).bold().monospacedDigit()
+    // MARK: - Goal Bar（上：kcal 进度；下：三大营养素微型进度条）
+    private var goalBar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // 顶部标题 + 总热量目标
+            HStack {
+                Label(String(localized: "daily_goal"), systemImage: "target")
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+                Text("kcal_with_unit \(Int64(dailyKcalGoal))")
+                    .font(.subheadline)
+                    .monospacedDigit()
+            }
+
+            // 总热量进度条
+            progressBar(
+                current: Double(totalKcal),
+                goal: Double(max(dailyKcalGoal, 1)),
+                height: 10
+            )
+
+            // 三大营养素：并排 3 段（每段垂直布局：数字 + 微进度条）
+            HStack(spacing: 12) {
+                microColumn(title: String(localized: "protein"),
+                            value: totalProtein,
+                            unitLabel: "g",
+                            goal: dailyProteinGoal,
+                            tint: .pink)
+
+                microColumn(title: String(localized: "carb"),
+                            value: totalCarb,
+                            unitLabel: "g",
+                            goal: dailyCarbGoal,
+                            tint: .blue)
+
+                microColumn(title: String(localized: "fat"),
+                            value: totalFat,
+                            unitLabel: "g",
+                            goal: dailyFatGoal,
+                            tint: .orange)
+            }
         }
-        .padding(.horizontal, 2)
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color.gray.opacity(0.08))
+        )
+    }
+
+    // 微型列：标题 + 数字 + 进度条（竖排布局，三段排成一行）
+    private func microColumn(title: String,
+                             value: Int,
+                             unitLabel: String,
+                             goal: Int,
+                             tint: Color) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(title)
+                    .font(.footnote.weight(.semibold))
+                Spacer()
+                Text("\(value)/\(goal)\(unitLabel)")
+                    .font(.footnote)
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+            }
+            progressBar(
+                current: Double(value),
+                goal: Double(max(goal, 1)),
+                height: 6
+            )
+            .tint(tint)
+        }
+        .frame(maxWidth: .infinity) // 让三段平均分布
+    }
+
+
+    // 通用大进度条
+    private func progressBar(current: Double, goal: Double, height: CGFloat) -> some View {
+        let p = min(current / max(goal, 1), 1.0)
+        return GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.15))
+                    .frame(height: height)
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.accentColor.opacity(0.9))
+                    .frame(width: geo.size.width * p, height: height)
+            }
+        }
+        .frame(height: height)
+    }
+
+    // 微型行：左标题，中间进度，右数字
+    private func microRow(title: String, value: Int, unitLabel: String, goal: Int) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(title).font(.footnote.weight(.semibold))
+                Spacer()
+                Text("\(value)/\(goal)\(unitLabel)")
+                    .font(.footnote)
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+            }
+            progressBar(current: Double(value),
+                        goal: Double(max(goal, 1)),
+                        height: 6)
+        }
     }
 
     // MARK: - Grid
@@ -184,7 +277,7 @@ struct TodayView: View {
                             }
                         }
                     },
-                    onMoveRight: { moveRight(at: idx) }   // ✅ 新增
+                    onMoveRight: { moveRight(at: idx) }
                 )
                 .aspectRatio(1, contentMode: .fit)
                 .matchedGeometryEffect(id: cards[idx].id, in: cardNS, isSource: expandedIndex != idx)
@@ -235,12 +328,10 @@ struct TodayView: View {
         MealCardStateStore.shared.saveAll(cards: cards)
     }
 
-    /// ✅ 新增：向右移动卡片
     private func moveRight(at index: Int) {
         withAnimation(.easeInOut) {
             guard !cards.isEmpty else { return }
             if index == cards.count - 1 {
-                // 最后一个 → 移动到开头
                 let last = cards.removeLast()
                 cards.insert(last, at: 0)
             } else {
@@ -284,7 +375,7 @@ struct TodayView: View {
     private var tapToExitEditing: some Gesture {
         TapGesture().onEnded {
             let shouldCatchTap =
-                isEditing && expandedIndex == nil && settingsIndex == nil && !isCreating && !showingCutoffPicker
+                isEditing && expandedIndex == nil && settingsIndex == nil && !isCreating
             if shouldCatchTap { withAnimation(.easeInOut) { isEditing = false } }
         }
     }
@@ -293,13 +384,12 @@ struct TodayView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
-            Button {
-                pendingCutoffHour = DayCycleManager.shared.currentCutoff
-                showingCutoffPicker = true
+            NavigationLink {
+                SettingsHomeView()
             } label: {
                 HStack(spacing: 6) {
-                    Image(systemName: "clock.badge.checkmark")
-                    Text(String(localized: "day_end"))
+                    Image(systemName: "gearshape")
+                    Text(String(localized: "settings"))
                 }
             }
             .disabled(hasAnyOverlayLocal)

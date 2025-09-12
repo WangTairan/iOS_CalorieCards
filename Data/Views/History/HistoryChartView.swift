@@ -37,6 +37,7 @@ struct HistoryChartView: View {
                         ForEach(Array(records.enumerated()), id: \.offset) { (i, r) in
                             let isToday = (i == lastIdx)
                             let isSelected = (selectedIndex == i)
+
                             let barBlue = Color.blue.opacity(0.20)
                             let barBlueSelected = Color.blue.opacity(0.60)
                             let barOrange = Color.orange.opacity(0.35)
@@ -50,7 +51,7 @@ struct HistoryChartView: View {
                             BarMark(
                                 x: .value("x", slotX(forIndex: i)),
                                 y: .value("y", r.totalKcal),
-                                width: .fixed(6) // 保持原始 barWidth
+                                width: .fixed(6)
                             )
                             .foregroundStyle(color)
 
@@ -126,26 +127,8 @@ struct HistoryChartView: View {
                             Rectangle()
                                 .fill(.clear)
                                 .contentShape(Rectangle())
-                                .gesture(
-                                    DragGesture(minimumDistance: 0)
-                                        .onEnded { value in
-                                            let origin = geo[proxy.plotAreaFrame].origin
-                                            let locX = value.location.x - origin.x
-                                            if let chartX: Double = proxy.value(atX: locX) {
-                                                let idx = Int(round(chartX - 1))
-                                                if (0..<m).contains(idx) {
-                                                    selectedIndex = idx
-                                                } else {
-                                                    selectedIndex = nil
-                                                }
-                                            } else {
-                                                selectedIndex = nil
-                                            }
-                                        }
-                                )
-                                .onTapGesture {
-                                    selectedIndex = nil
-                                }
+                                .gesture(dragGesture(proxy: proxy, geo: geo, count: m))
+                                .onTapGesture { selectedIndex = nil }
                         }
                     }
                 }
@@ -154,6 +137,37 @@ struct HistoryChartView: View {
         }
         .fixedSize(horizontal: false, vertical: true)
     }
+
+    // MARK: - 手势逻辑单独封装，避免编译器卡死
+    private func dragGesture(proxy: ChartProxy, geo: GeometryProxy, count m: Int) -> some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onEnded { value in
+                let rect: CGRect
+                #if compiler(>=5.9) // iOS 17 SDK
+                guard let anchor = proxy.plotFrame else { return }
+                rect = geo[anchor]
+                #else               // iOS 16 SDK
+                let anchor = proxy.plotAreaFrame
+                rect = geo[anchor]
+                #endif
+
+                let origin = rect.origin
+                let locX = value.location.x - origin.x
+
+                if let chartX: Double = proxy.value(atX: locX) {
+                    let idx = Int(round(chartX - 1))
+                    if (0..<m).contains(idx) {
+                        selectedIndex = idx
+                    } else {
+                        selectedIndex = nil
+                    }
+                } else {
+                    selectedIndex = nil
+                }
+            }
+    }
+
+
 
     private func startLabel(_ d: Date) -> String {
         let f = DateFormatter()

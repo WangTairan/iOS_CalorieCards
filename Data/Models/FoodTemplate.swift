@@ -9,19 +9,36 @@ enum UnitKind: String, Codable, CaseIterable {
 
 @Model
 final class FoodTemplate {
-    // 多语言名字（内置有中英；新建时两个都设为同一输入）
     var nameZH: String
     var nameEN: String
 
     var unit: UnitKind
     var kcalPerUnit: Double
+    
+    // 新增
+    var proteinPerUnit: Double
+    var carbPerUnit: Double
+    var fatPerUnit: Double
+
     var isPinned: Bool = false
 
-    init(nameZH: String, nameEN: String, unit: UnitKind, kcalPerUnit: Double, isPinned: Bool = false) {
+    init(
+        nameZH: String,
+        nameEN: String,
+        unit: UnitKind,
+        kcalPerUnit: Double,
+        proteinPerUnit: Double,
+        carbPerUnit: Double,
+        fatPerUnit: Double,
+        isPinned: Bool = false
+    ) {
         self.nameZH = nameZH
         self.nameEN = nameEN
         self.unit = unit
         self.kcalPerUnit = kcalPerUnit
+        self.proteinPerUnit = proteinPerUnit
+        self.carbPerUnit = carbPerUnit
+        self.fatPerUnit = fatPerUnit
         self.isPinned = isPinned
     }
 
@@ -40,6 +57,7 @@ final class FoodTemplate {
         }
     }
 }
+
 
 @Model
 final class MealSet {

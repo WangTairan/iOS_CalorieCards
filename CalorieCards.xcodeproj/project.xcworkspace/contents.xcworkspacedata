@@ -4,10 +4,9 @@
    <Group
       location = "group:New Group"
       name = "New Group">
-   </Group>
-   <Group
-      location = "group:New Group"
-      name = "New Group">
+      <FileRef
+         location = "absolute:/Users/tairanwang/Desktop/IOS_dev/Resources/Assets.xcassets">
+      </FileRef>
    </Group>
    <FileRef
       location = "self:">

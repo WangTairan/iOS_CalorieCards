@@ -4,6 +4,7 @@ import SwiftData
 struct MealSetsView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \MealSet.name) private var mealSets: [MealSet]
+
     @State private var showingNew = false
     @State private var query = ""
 
@@ -40,7 +41,6 @@ struct MealSetsView: View {
                         idx.map { filtered[$0] }.forEach(context.delete)
                         try? context.save()
                     }
-
                 }
             }
         }
@@ -63,8 +63,11 @@ struct MealSetsView: View {
                 }
             }
         }
+        // ✅ 新建套餐用“大 sheet”风格
         .sheet(isPresented: $showingNew) {
             MealSetEditor()
+                .presentationDetents([.medium, .large])
+                .presentationCornerRadius(20)
         }
     }
 }

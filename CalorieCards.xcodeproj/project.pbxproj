@@ -32,20 +32,38 @@
 		E91F12C92E4D1A880003BCF9 /* FoodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12C82E4D1A850003BCF9 /* FoodPicker.swift */; };
 		E91F12D22E4D3D840003BCF9 /* ExpandedKcalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12D12E4D3D820003BCF9 /* ExpandedKcalCard.swift */; };
 		E91F12D42E4D3EE20003BCF9 /* ExpandedMealCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F12D32E4D3EDA0003BCF9 /* ExpandedMealCardStyle.swift */; };
+		E9855A122E6E5E180017781C /* SettingsHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9855A112E6E5E0F0017781C /* SettingsHomeView.swift */; };
+		E9855A162E6E5E5E0017781C /* GoalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9855A152E6E5E530017781C /* GoalSettingsView.swift */; };
+		E9855A182E6E5E6C0017781C /* BMRCalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9855A172E6E5E690017781C /* BMRCalculatorView.swift */; };
+		E9855A1A2E6E5E870017781C /* SettingsSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9855A192E6E5E830017781C /* SettingsSupport.swift */; };
+		E9A8BC552E5B7956004CA7DC /* fruits.json in Resources */ = {isa = PBXBuildFile; fileRef = E9A8BC542E5B7953004CA7DC /* fruits.json */; };
+		E9A8BC572E5B7CC5004CA7DC /* nuts.json in Resources */ = {isa = PBXBuildFile; fileRef = E9A8BC562E5B7CBF004CA7DC /* nuts.json */; };
 		E9B701512E4D789F00A46F7A /* FoodPortion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B701502E4D789F00A46F7A /* FoodPortion.swift */; };
 		E9B7015D2E4D9E2C00A46F7A /* MealCardStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B7015C2E4D9E2C00A46F7A /* MealCardStateStore.swift */; };
 		E9B701602E50274D00A46F7A /* MealCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B7015F2E50274900A46F7A /* MealCard.swift */; };
 		E9C76AF82E52D81B00853B5E /* DayEndPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C76AF72E52D81700853B5E /* DayEndPicker.swift */; };
 		E9E25AEC2E5186A8004D30BD /* ExpandedCardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E25AEB2E5186A0004D30BD /* ExpandedCardSettings.swift */; };
 		E9E2A41B2E5889AB007943F8 /* DayCycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E2A41A2E5889A0007943F8 /* DayCycleManager.swift */; };
-		E9E2A4672E599142007943F8 /* meats_land.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A4632E599142007943F8 /* meats_land.json */; };
+		E9E2A4672E599142007943F8 /* meats.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A4632E599142007943F8 /* meats.json */; };
 		E9E2A4682E599142007943F8 /* dairy_eggs.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A4612E599142007943F8 /* dairy_eggs.json */; };
 		E9E2A4692E599142007943F8 /* vegetables.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A4652E599142007943F8 /* vegetables.json */; };
 		E9E2A46A2E599142007943F8 /* seasonings.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A4642E599142007943F8 /* seasonings.json */; };
 		E9E2A46B2E599142007943F8 /* fish.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A4622E599142007943F8 /* fish.json */; };
+		E9E2A46D2E599547007943F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9E2A46C2E599547007943F8 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E902A6A72E60EDEB000874DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E90901E72E4BE7EC001A9713 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E90901EE2E4BE7EC001A9713;
+			remoteInfo = CalorieCards;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		E902A6A32E60EDEB000874DF /* CalorieCardsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalorieCardsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9089BC32E4D0E2900309575 /* CalorieCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieCardsApp.swift; sourceTree = "<group>"; };
 		E9089BC42E4D0E2900309575 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E9089BC62E4D0E2900309575 /* FoodTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTemplate.swift; sourceTree = "<group>"; };
@@ -65,7 +83,6 @@
 		E9099C802E57A1EF00104A64 /* EditFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodView.swift; sourceTree = "<group>"; };
 		E90CE01D2E53615800A7516D /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		E90CE01F2E53619400A7516D /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		E91F12B52E4D12490003BCF9 /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
 		E91F12B92E4D13980003BCF9 /* AppBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapper.swift; sourceTree = "<group>"; };
 		E91F12BD2E4D140E0003BCF9 /* SeedTemplatesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedTemplatesUseCase.swift; sourceTree = "<group>"; };
 		E91F12C12E4D16060003BCF9 /* CardName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardName.swift; sourceTree = "<group>"; };
@@ -73,6 +90,12 @@
 		E91F12C82E4D1A850003BCF9 /* FoodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPicker.swift; sourceTree = "<group>"; };
 		E91F12D12E4D3D820003BCF9 /* ExpandedKcalCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedKcalCard.swift; sourceTree = "<group>"; };
 		E91F12D32E4D3EDA0003BCF9 /* ExpandedMealCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMealCardStyle.swift; sourceTree = "<group>"; };
+		E9855A112E6E5E0F0017781C /* SettingsHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHomeView.swift; sourceTree = "<group>"; };
+		E9855A152E6E5E530017781C /* GoalSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalSettingsView.swift; sourceTree = "<group>"; };
+		E9855A172E6E5E690017781C /* BMRCalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMRCalculatorView.swift; sourceTree = "<group>"; };
+		E9855A192E6E5E830017781C /* SettingsSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSupport.swift; sourceTree = "<group>"; };
+		E9A8BC542E5B7953004CA7DC /* fruits.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fruits.json; sourceTree = "<group>"; };
+		E9A8BC562E5B7CBF004CA7DC /* nuts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = nuts.json; sourceTree = "<group>"; };
 		E9B701502E4D789F00A46F7A /* FoodPortion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPortion.swift; sourceTree = "<group>"; };
 		E9B7015C2E4D9E2C00A46F7A /* MealCardStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCardStateStore.swift; sourceTree = "<group>"; };
 		E9B7015F2E50274900A46F7A /* MealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCard.swift; sourceTree = "<group>"; };
@@ -81,12 +104,20 @@
 		E9E2A41A2E5889A0007943F8 /* DayCycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCycleManager.swift; sourceTree = "<group>"; };
 		E9E2A4612E599142007943F8 /* dairy_eggs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dairy_eggs.json; sourceTree = "<group>"; };
 		E9E2A4622E599142007943F8 /* fish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fish.json; sourceTree = "<group>"; };
-		E9E2A4632E599142007943F8 /* meats_land.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = meats_land.json; sourceTree = "<group>"; };
+		E9E2A4632E599142007943F8 /* meats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = meats.json; sourceTree = "<group>"; };
 		E9E2A4642E599142007943F8 /* seasonings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seasonings.json; sourceTree = "<group>"; };
 		E9E2A4652E599142007943F8 /* vegetables.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = vegetables.json; sourceTree = "<group>"; };
+		E9E2A46C2E599547007943F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E902A6A02E60EDEB000874DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E90901EC2E4BE7EC001A9713 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -100,8 +131,8 @@
 		E90901E62E4BE7EC001A9713 = {
 			isa = PBXGroup;
 			children = (
+				E9E2A46C2E599547007943F8 /* Assets.xcassets */,
 				E91F12CC2E4D1C1D0003BCF9 /* Resources */,
-				E91F12B22E4D113B0003BCF9 /* Domain */,
 				E91F12B12E4D0F3A0003BCF9 /* Data */,
 				E91F12B02E4D0EFE0003BCF9 /* App */,
 				E90901F02E4BE7EC001A9713 /* Products */,
@@ -112,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				E90901EF2E4BE7EC001A9713 /* CalorieCards.app */,
+				E902A6A32E60EDEB000874DF /* CalorieCardsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +151,10 @@
 		E9099C822E57AC7D00104A64 /* Today */ = {
 			isa = PBXGroup;
 			children = (
+				E9855A152E6E5E530017781C /* GoalSettingsView.swift */,
+				E9855A172E6E5E690017781C /* BMRCalculatorView.swift */,
+				E9855A192E6E5E830017781C /* SettingsSupport.swift */,
+				E9855A112E6E5E0F0017781C /* SettingsHomeView.swift */,
 				E9C76AF72E52D81700853B5E /* DayEndPicker.swift */,
 				E91F12C42E4D17250003BCF9 /* CardView.swift */,
 				E91F12D12E4D3D820003BCF9 /* ExpandedKcalCard.swift */,
@@ -171,14 +207,6 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		E91F12B22E4D113B0003BCF9 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				E91F12B52E4D12490003BCF9 /* DailyData.swift */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
 		E91F12B42E4D11610003BCF9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,9 +256,11 @@
 		E9E2A4662E599142007943F8 /* FoodSeeds */ = {
 			isa = PBXGroup;
 			children = (
+				E9A8BC542E5B7953004CA7DC /* fruits.json */,
+				E9A8BC562E5B7CBF004CA7DC /* nuts.json */,
 				E9E2A4612E599142007943F8 /* dairy_eggs.json */,
 				E9E2A4622E599142007943F8 /* fish.json */,
-				E9E2A4632E599142007943F8 /* meats_land.json */,
+				E9E2A4632E599142007943F8 /* meats.json */,
 				E9E2A4642E599142007943F8 /* seasonings.json */,
 				E9E2A4652E599142007943F8 /* vegetables.json */,
 			);
@@ -240,6 +270,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E902A6A22E60EDEB000874DF /* CalorieCardsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E902A6A92E60EDEC000874DF /* Build configuration list for PBXNativeTarget "CalorieCardsTests" */;
+			buildPhases = (
+				E902A69F2E60EDEB000874DF /* Sources */,
+				E902A6A02E60EDEB000874DF /* Frameworks */,
+				E902A6A12E60EDEB000874DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E902A6A82E60EDEB000874DF /* PBXTargetDependency */,
+			);
+			name = CalorieCardsTests;
+			packageProductDependencies = (
+			);
+			productName = CalorieCardsTests;
+			productReference = E902A6A32E60EDEB000874DF /* CalorieCardsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E90901EE2E4BE7EC001A9713 /* CalorieCards */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E90901FC2E4BE7EE001A9713 /* Build configuration list for PBXNativeTarget "CalorieCards" */;
@@ -269,6 +319,10 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					E902A6A22E60EDEB000874DF = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = E90901EE2E4BE7EC001A9713;
+					};
 					E90901EE2E4BE7EC001A9713 = {
 						CreatedOnToolsVersion = 16.4;
 						LastSwiftMigration = 1640;
@@ -291,19 +345,30 @@
 			projectRoot = "";
 			targets = (
 				E90901EE2E4BE7EC001A9713 /* CalorieCards */,
+				E902A6A22E60EDEB000874DF /* CalorieCardsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E902A6A12E60EDEB000874DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E90901ED2E4BE7EC001A9713 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9A8BC572E5B7CC5004CA7DC /* nuts.json in Resources */,
 				E9089BCC2E4D0E2900309575 /* Localizable.xcstrings in Resources */,
-				E9E2A4672E599142007943F8 /* meats_land.json in Resources */,
+				E9E2A4672E599142007943F8 /* meats.json in Resources */,
 				E9E2A4682E599142007943F8 /* dairy_eggs.json in Resources */,
 				E9E2A4692E599142007943F8 /* vegetables.json in Resources */,
+				E9A8BC552E5B7956004CA7DC /* fruits.json in Resources */,
+				E9E2A46D2E599547007943F8 /* Assets.xcassets in Resources */,
 				E9E2A46A2E599142007943F8 /* seasonings.json in Resources */,
 				E9E2A46B2E599142007943F8 /* fish.json in Resources */,
 			);
@@ -312,21 +377,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E902A69F2E60EDEB000874DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E90901EB2E4BE7EC001A9713 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E9099C812E57A1F600104A64 /* EditFoodView.swift in Sources */,
+				E9855A1A2E6E5E870017781C /* SettingsSupport.swift in Sources */,
+				E9855A162E6E5E5E0017781C /* GoalSettingsView.swift in Sources */,
 				E9C76AF82E52D81B00853B5E /* DayEndPicker.swift in Sources */,
 				E91F12BA2E4D139B0003BCF9 /* AppBootstrapper.swift in Sources */,
 				E9099C7F2E579F0400104A64 /* AllFoodsView.swift in Sources */,
 				E91F12D22E4D3D840003BCF9 /* ExpandedKcalCard.swift in Sources */,
+				E9855A182E6E5E6C0017781C /* BMRCalculatorView.swift in Sources */,
 				E9099C6D2E567DAE00104A64 /* LibraryView.swift in Sources */,
 				E9E25AEC2E5186A8004D30BD /* ExpandedCardSettings.swift in Sources */,
 				E91F12C52E4D172B0003BCF9 /* CardView.swift in Sources */,
 				E91F12D42E4D3EE20003BCF9 /* ExpandedMealCardStyle.swift in Sources */,
 				E9B701512E4D789F00A46F7A /* FoodPortion.swift in Sources */,
 				E9099C6F2E56900200104A64 /* AddFoodView.swift in Sources */,
+				E9855A122E6E5E180017781C /* SettingsHomeView.swift in Sources */,
 				E90CE0202E53619B00A7516D /* HistoryView.swift in Sources */,
 				E9099C652E5427B100104A64 /* HistoryRecord.swift in Sources */,
 				E9B701602E50274D00A46F7A /* MealCard.swift in Sources */,
@@ -351,7 +427,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E902A6A82E60EDEB000874DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E90901EE2E4BE7EC001A9713 /* CalorieCards */;
+			targetProxy = E902A6A72E60EDEB000874DF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		E902A6AA2E60EDEC000874DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VG446JX3W8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tairan.CalorieCardsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CalorieCards.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CalorieCards";
+			};
+			name = Debug;
+		};
+		E902A6AB2E60EDEC000874DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VG446JX3W8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tairan.CalorieCardsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CalorieCards.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CalorieCards";
+			};
+			name = Release;
+		};
 		E90901FA2E4BE7EE001A9713 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -486,6 +606,8 @@
 				DEVELOPMENT_TEAM = VG446JX3W8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Calorie Cards";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -496,8 +618,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tairan.CalorieCards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tairan.caloriecards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -516,6 +640,8 @@
 				DEVELOPMENT_TEAM = VG446JX3W8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Calorie Cards";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -526,8 +652,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tairan.CalorieCards;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tairan.caloriecards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -537,6 +665,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E902A6A92E60EDEC000874DF /* Build configuration list for PBXNativeTarget "CalorieCardsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E902A6AA2E60EDEC000874DF /* Debug */,
+				E902A6AB2E60EDEC000874DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E90901EA2E4BE7EC001A9713 /* Build configuration list for PBXProject "CalorieCards" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

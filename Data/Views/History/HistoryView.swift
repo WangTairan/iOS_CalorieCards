@@ -79,7 +79,7 @@ struct HistoryView: View {
     private func deleteRecord(_ record: HistoryRecord) {
         if let index = records.firstIndex(where: { $0.id == record.id }) {
             withAnimation(.easeInOut) {
-                records.remove(at: index)
+                _ = records.remove(at: index)
             }
         }
         let loader = HistoryLoader()

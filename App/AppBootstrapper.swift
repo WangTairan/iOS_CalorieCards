@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftData
 
-/// 启动时做一次性初始化，然后切到主界面
 struct AppBootstrapper: View {
     @Environment(\.modelContext) private var context
     @State private var ready = false

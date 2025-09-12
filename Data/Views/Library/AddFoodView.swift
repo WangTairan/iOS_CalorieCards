@@ -1,4 +1,3 @@
-// UI/Library/AddFoodView.swift
 import SwiftUI
 import SwiftData
 
@@ -10,6 +9,12 @@ struct AddFoodView: View {
     @State private var name = ""
     @State private var unit: UnitKind = .per100g
     @State private var kcalPerUnit: Double = 100
+
+    // 三大营养素，默认 0
+    @State private var proteinPerUnit: Double = 0
+    @State private var carbPerUnit: Double = 0
+    @State private var fatPerUnit: Double = 0
+
     @State private var errorMessage: String?
 
     var body: some View {
@@ -19,9 +24,12 @@ struct AddFoodView: View {
                     TextField(String(localized: "food_name"), text: $name)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
+
                     Picker(String(localized: "unit"), selection: $unit) {
                         ForEach(UnitKind.allCases, id: \.self) { Text(unitLocalized($0)) }
                     }
+
+                    // 统一：名称在左、数字在右、单位在最后
                     HStack {
                         Text(String(localized: "kcal_per_unit"))
                         Spacer()
@@ -29,6 +37,37 @@ struct AddFoodView: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .frame(width: 100)
+                        Text(String(localized: "kcal_unit")).foregroundStyle(.secondary)
+                    }
+
+                    HStack {
+                        Text(String(localized: "protein_per_unit"))
+                        Spacer()
+                        TextField("0", value: $proteinPerUnit, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                        Text(String(localized: "g_unit")).foregroundStyle(.secondary)
+                    }
+
+                    HStack {
+                        Text(String(localized: "carb_per_unit"))
+                        Spacer()
+                        TextField("0", value: $carbPerUnit, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                        Text(String(localized: "g_unit")).foregroundStyle(.secondary)
+                    }
+
+                    HStack {
+                        Text(String(localized: "fat_per_unit"))
+                        Spacer()
+                        TextField("0", value: $fatPerUnit, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                        Text(String(localized: "g_unit")).foregroundStyle(.secondary)
                     }
                 }
 
@@ -61,7 +100,16 @@ struct AddFoodView: View {
         }
 
         // 新建：两个语言名都设为用户输入
-        let f = FoodTemplate(nameZH: trimmed, nameEN: trimmed, unit: unit, kcalPerUnit: kcalPerUnit)
+        let f = FoodTemplate(
+            nameZH: trimmed,
+            nameEN: trimmed,
+            unit: unit,
+            kcalPerUnit: kcalPerUnit,
+            proteinPerUnit: proteinPerUnit,
+            carbPerUnit: carbPerUnit,
+            fatPerUnit: fatPerUnit
+        )
+
         context.insert(f)
         do {
             try context.save()

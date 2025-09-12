@@ -1,0 +1,19 @@
+[
+    { "nameZH": "苹果", "nameEN": "Apple", "unit": "per100g", "kcalPerUnit": 52, "proteinPerUnit": 0.3, "carbPerUnit": 14.0, "fatPerUnit": 0.2 },
+    { "nameZH": "梨", "nameEN": "Pear", "unit": "per100g", "kcalPerUnit": 57, "proteinPerUnit": 0.4, "carbPerUnit": 15.0, "fatPerUnit": 0.1 },
+    { "nameZH": "香蕉（去皮）", "nameEN": "Banana (peeled)", "unit": "per100g", "kcalPerUnit": 89, "proteinPerUnit": 1.1, "carbPerUnit": 23.0, "fatPerUnit": 0.3 },
+    { "nameZH": "橙子（去皮）", "nameEN": "Orange (peeled)", "unit": "per100g", "kcalPerUnit": 47, "proteinPerUnit": 0.9, "carbPerUnit": 12.0, "fatPerUnit": 0.1 },
+    { "nameZH": "葡萄", "nameEN": "Grapes", "unit": "per100g", "kcalPerUnit": 69, "proteinPerUnit": 0.7, "carbPerUnit": 18.0, "fatPerUnit": 0.2 },
+    { "nameZH": "草莓", "nameEN": "Strawberries", "unit": "per100g", "kcalPerUnit": 32, "proteinPerUnit": 0.7, "carbPerUnit": 7.7, "fatPerUnit": 0.3 },
+    { "nameZH": "蓝莓", "nameEN": "Blueberries", "unit": "per100g", "kcalPerUnit": 57, "proteinPerUnit": 0.7, "carbPerUnit": 14.5, "fatPerUnit": 0.3 },
+    { "nameZH": "猕猴桃", "nameEN": "Kiwi fruit", "unit": "per100g", "kcalPerUnit": 61, "proteinPerUnit": 1.1, "carbPerUnit": 15.0, "fatPerUnit": 0.5 },
+    { "nameZH": "西瓜（去皮）", "nameEN": "Watermelon (flesh only)", "unit": "per100g", "kcalPerUnit": 30, "proteinPerUnit": 0.6, "carbPerUnit": 8.0, "fatPerUnit": 0.2 },
+    { "nameZH": "菠萝（去皮）", "nameEN": "Pineapple (peeled)", "unit": "per100g", "kcalPerUnit": 50, "proteinPerUnit": 0.5, "carbPerUnit": 13.0, "fatPerUnit": 0.1 },
+    { "nameZH": "李子", "nameEN": "Plum", "unit": "per100g", "kcalPerUnit": 46, "proteinPerUnit": 0.7, "carbPerUnit": 11.0, "fatPerUnit": 0.3 },
+    { "nameZH": "樱桃", "nameEN": "Cherries", "unit": "per100g", "kcalPerUnit": 50, "proteinPerUnit": 1.0, "carbPerUnit": 12.0, "fatPerUnit": 0.3 },
+    { "nameZH": "荔枝", "nameEN": "Lychee", "unit": "per100g", "kcalPerUnit": 66, "proteinPerUnit": 0.8, "carbPerUnit": 17.0, "fatPerUnit": 0.4 },
+    { "nameZH": "油桃", "nameEN": "Nectarine", "unit": "per100g", "kcalPerUnit": 44, "proteinPerUnit": 1.1, "carbPerUnit": 10.5, "fatPerUnit": 0.3 },
+    { "nameZH": "桃子", "nameEN": "Peach", "unit": "per100g", "kcalPerUnit": 39, "proteinPerUnit": 0.9, "carbPerUnit": 10.0, "fatPerUnit": 0.3 },
+    { "nameZH": "扁桃", "nameEN": "Flat peach", "unit": "per100g", "kcalPerUnit": 44, "proteinPerUnit": 0.9, "carbPerUnit": 11.0, "fatPerUnit": 0.2 },
+    { "nameZH": "芒果", "nameEN": "Mango", "unit": "per100g", "kcalPerUnit": 60, "proteinPerUnit": 0.8, "carbPerUnit": 15.0, "fatPerUnit": 0.4 }
+]

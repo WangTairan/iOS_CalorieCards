@@ -8,15 +8,15 @@ final class HistoryLoader {
         let mgr = DayCycleManager.shared
         let currentCycleKey = mgr.currentCycleKey()
 
-        // 1) 找到所有 mealcards.* 的 key，并解析出 start（来自 key 的 ISO8601）
+        // 1) 扫描所有 "mealcards.*" key
         let fmt = ISO8601DateFormatter()
         fmt.formatOptions = [.withInternetDateTime, .withColonSeparatorInTime, .withDashSeparatorInDate]
 
         struct Entry {
-            let storageKey: String   // 例如 "mealcards.2025-08-22T02:00:00Z"
-            let start: Date
-            let cards: [MealCard]?   // 该天的卡片
-            let isCurrent: Bool
+            let storageKey: String      // "mealcards.<ISO8601>"
+            let start: Date             // 逻辑日开始
+            let cards: [MealCard]?      // 该日卡片（可能为 nil）
+            let isCurrent: Bool         // 是否为当前进行中的周期
         }
 
         var entries: [Entry] = []
@@ -26,41 +26,57 @@ final class HistoryLoader {
             guard let start = fmt.date(from: iso) else { continue }
             let cards = (ud.data(forKey: key)).flatMap { try? JSONDecoder().decode([MealCard].self, from: $0) }
             let isCurrent = (iso == currentCycleKey)
-            entries.append(Entry(storageKey: key, start: start, cards: cards, isCurrent: isCurrent))
+            entries.append(.init(storageKey: key, start: start, cards: cards, isCurrent: isCurrent))
         }
 
-        // 没有任何 key：返回空
+        // 没有任何历史：返回空
         if entries.isEmpty { return [] }
 
-        // 2) 按 start 升序排序
+        // 2) 按 start 升序
         entries.sort { $0.start < $1.start }
 
-        // 3) 生成 HistoryRecord（历史 end = 下一条 start；当前 end = min(now, nextSwitch)）
+        // 3) 生成 HistoryRecord
+        //    - 有下一条：先用下一条 start 当 end；若跨多天，则裁到“该条 start 的下一个 cutoff”
+        //    - 没有下一条：
+        //        - 若是当前周期：end = min(now, nextSwitch)（进行中，随 now 变化）
+        //        - 若非当前：end = “该条 start 的下一个 cutoff”（单天封口）
         var records: [HistoryRecord] = []
+        let tz = TimeZone.current
+
         for (i, e) in entries.enumerated() {
-            let end: Date = {
+            // 当天的“单天封口”边界 = 从 e.start 起，下一个 cutoff 本地时刻（DST 友好，可能是 23/24/25h）
+            let cutoffHour = Calendar(identifier: .gregorian)
+                .dateComponents(in: tz, from: e.start).hour ?? 0
+            let oneDayBoundary = Self.nextOccurrence(ofHour: cutoffHour, after: e.start, tz: tz)
+
+            // 先算候选 end
+            let candidateEnd: Date = {
                 if i + 1 < entries.count {
-                    return entries[i + 1].start       // 下一天开始 = 本天结束
+                    return entries[i + 1].start
                 } else {
-                    // 最后一条
                     if e.isCurrent {
                         return min(now, mgr.nextSwitch)
                     } else {
-                        // 兜底：没遇到过，但以 24h 做结束，避免 duration=0
-                        return e.start.addingTimeInterval(24 * 3600)
+                        return oneDayBoundary
                     }
                 }
             }()
 
-            let total = (e.cards ?? []).reduce(0) { $0 + $1.kcal }
-            records.append(
-                HistoryRecord(
-                    key: e.storageKey,
-                    start: e.start,
-                    end: end,
-                    totalKcal: total
+            // 最终 end：不超过“单天封口”边界
+            let end = min(candidateEnd, oneDayBoundary)
+
+            // 保证正时长再加入
+            if end > e.start {
+                let total = (e.cards ?? []).reduce(0) { $0 + $1.kcal }
+                records.append(
+                    HistoryRecord(
+                        key: e.storageKey,
+                        start: e.start,
+                        end: end,
+                        totalKcal: total
+                    )
                 )
-            )
+            }
         }
 
         return records
@@ -68,5 +84,29 @@ final class HistoryLoader {
 
     func delete(_ record: HistoryRecord) {
         ud.removeObject(forKey: record.key)
+    }
+
+    // MARK: - Helpers
+
+    /// 从某时刻之后的“下一个指定小时”的本地时间（作为逻辑日切换点；DST 友好）
+    private static func nextOccurrence(ofHour hour: Int, after: Date, tz: TimeZone) -> Date {
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = tz
+
+        var comps = cal.dateComponents(in: tz, from: after)
+        comps.hour = hour
+        comps.minute = 0
+        comps.second = 0
+        var candidate = cal.date(from: comps)
+
+        if candidate == nil || candidate! <= after {
+            let nextDay = cal.date(byAdding: .day, value: 1, to: after)!
+            comps = cal.dateComponents(in: tz, from: nextDay)
+            comps.hour = hour
+            comps.minute = 0
+            comps.second = 0
+            candidate = cal.date(from: comps)
+        }
+        return candidate ?? after.addingTimeInterval(24 * 3600)
     }
 }

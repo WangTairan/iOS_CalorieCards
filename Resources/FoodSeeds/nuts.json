@@ -1,0 +1,13 @@
+[
+    { "nameZH": "杏仁", "nameEN": "Almonds", "unit": "per100g", "kcalPerUnit": 579, "proteinPerUnit": 21.0, "carbPerUnit": 22.0, "fatPerUnit": 50.0 },
+    { "nameZH": "核桃", "nameEN": "Walnuts", "unit": "per100g", "kcalPerUnit": 654, "proteinPerUnit": 15.0, "carbPerUnit": 14.0, "fatPerUnit": 65.0 },
+    { "nameZH": "腰果", "nameEN": "Cashews", "unit": "per100g", "kcalPerUnit": 553, "proteinPerUnit": 18.0, "carbPerUnit": 30.0, "fatPerUnit": 44.0 },
+    { "nameZH": "开心果", "nameEN": "Pistachios", "unit": "per100g", "kcalPerUnit": 562, "proteinPerUnit": 20.0, "carbPerUnit": 28.0, "fatPerUnit": 45.0 },
+    { "nameZH": "榛子", "nameEN": "Hazelnuts", "unit": "per100g", "kcalPerUnit": 628, "proteinPerUnit": 15.0, "carbPerUnit": 17.0, "fatPerUnit": 61.0 },
+    { "nameZH": "松子", "nameEN": "Pine nuts", "unit": "per100g", "kcalPerUnit": 673, "proteinPerUnit": 14.0, "carbPerUnit": 13.0, "fatPerUnit": 68.0 },
+    { "nameZH": "夏威夷果", "nameEN": "Macadamia nuts", "unit": "per100g", "kcalPerUnit": 718, "proteinPerUnit": 8.0, "carbPerUnit": 14.0, "fatPerUnit": 76.0 },
+    { "nameZH": "花生", "nameEN": "Peanuts", "unit": "per100g", "kcalPerUnit": 567, "proteinPerUnit": 26.0, "carbPerUnit": 16.0, "fatPerUnit": 49.0 },
+    { "nameZH": "葡萄干", "nameEN": "Raisins", "unit": "per100g", "kcalPerUnit": 299, "proteinPerUnit": 3.1, "carbPerUnit": 79.0, "fatPerUnit": 0.5 },
+    { "nameZH": "红枣（干）", "nameEN": "Jujube (dried)", "unit": "per100g", "kcalPerUnit": 281, "proteinPerUnit": 4.0, "carbPerUnit": 74.0, "fatPerUnit": 0.5 },
+]
+

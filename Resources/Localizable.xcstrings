@@ -4,18 +4,31 @@
     "" : {
 
     },
-    "%lld %@" : {
+    "%lld" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld %2$@"
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$lld %2$@"
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld kcal" : {
+
+    },
+    "%lld/%lld%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld%3$@"
           }
         }
       }
@@ -32,6 +45,182 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "0"
+          }
+        }
+      }
+    },
+    "56" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "56"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "56"
+          }
+        }
+      }
+    },
+    "125" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "125"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "125"
+          }
+        }
+      }
+    },
+    "250" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "250"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "250"
+          }
+        }
+      }
+    },
+    "2000" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2000"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2000"
+          }
+        }
+      }
+    },
+    "active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活跃"
+          }
+        }
+      }
+    },
+    "activity_hint_active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard exercise 6–7 days per week"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每周 6–7 天高强度训练"
+          }
+        }
+      }
+    },
+    "activity_hint_light" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light exercise 1–3 days per week"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每周 1–3 天轻度运动"
+          }
+        }
+      }
+    },
+    "activity_hint_moderate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exercise 3–5 days per week"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每周 3–5 天规律运动"
+          }
+        }
+      }
+    },
+    "activity_hint_sedentary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desk job, little or no exercise"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "久坐办公，几乎不运动"
+          }
+        }
+      }
+    },
+    "activity_hint_very_active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physical job with daily training"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "体力劳动并且每天训练"
+          }
+        }
+      }
+    },
+    "activity_level" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity Level"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动水平"
           }
         }
       }
@@ -69,6 +258,22 @@
         }
       }
     },
+    "age" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Age"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "年龄"
+          }
+        }
+      }
+    },
     "all_foods" : {
       "localizations" : {
         "en" : {
@@ -98,6 +303,70 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "热量卡片"
+          }
+        }
+      }
+    },
+    "bmr_calculator" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMR Calculator"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础代谢计算器"
+          }
+        }
+      }
+    },
+    "bmr_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMR is the minimum energy required to maintain body functions."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础代谢是维持身体机能所需的最低能量。"
+          }
+        }
+      }
+    },
+    "bmr_result" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMR Result"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础代谢结果"
+          }
+        }
+      }
+    },
+    "bmr_section_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BMR Calculation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础代谢计算"
           }
         }
       }
@@ -132,6 +401,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "carb" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carb"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "碳水"
+          }
+        }
+      }
+    },
+    "carb_goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carbohydrates Goal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "碳水目标"
+          }
+        }
+      }
+    },
+    "carb_per_unit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "carb per unit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每单位碳水"
           }
         }
       }
@@ -185,6 +502,22 @@
         }
       }
     },
+    "cm_with_unit %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld cm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 厘米"
+          }
+        }
+      }
+    },
     "color" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -230,6 +563,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除所有记录"
+          }
+        }
+      }
+    },
+    "daily_goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Goal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日目标"
+          }
+        }
+      }
+    },
+    "daily_nutrition_calculator" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Nutrition Calculator"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日营养计算器"
           }
         }
       }
@@ -283,22 +648,6 @@
         }
       }
     },
-    "delete_card" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Card"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除卡片"
-          }
-        }
-      }
-    },
     "dinner" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -312,6 +661,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "晚餐"
+          }
+        }
+      }
+    },
+    "done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
           }
         }
       }
@@ -367,22 +732,6 @@
         }
       }
     },
-    "edit_card_settings" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit Card Settings"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑卡片设置"
-          }
-        }
-      }
-    },
     "edit_meal_set" : {
       "localizations" : {
         "en" : {
@@ -415,6 +764,22 @@
         }
       }
     },
+    "exercise_section_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exercise Expenditure"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础代谢计算"
+          }
+        }
+      }
+    },
     "extra_add_kcal" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -428,6 +793,70 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "额外添加热量"
+          }
+        }
+      }
+    },
+    "fat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脂肪"
+          }
+        }
+      }
+    },
+    "fat_goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fat Goal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脂肪目标"
+          }
+        }
+      }
+    },
+    "fat_per_unit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fat per unit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每单位脂肪"
+          }
+        }
+      }
+    },
+    "female" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Female"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "女性"
           }
         }
       }
@@ -514,6 +943,71 @@
         }
       }
     },
+    "g_unit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "g"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "克"
+          }
+        }
+      }
+    },
+    "g_with_unit %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld g"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld 克"
+          }
+        }
+      }
+    },
+    "goal_settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标设置"
+          }
+        }
+      }
+    },
+    "height_cm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Height (cm)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "身高（厘米）"
+          }
+        }
+      }
+    },
     "history" : {
       "localizations" : {
         "en" : {
@@ -543,6 +1037,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图标"
+          }
+        }
+      }
+    },
+    "kcal_goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories Goal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "热量目标"
           }
         }
       }
@@ -596,6 +1106,22 @@
         }
       }
     },
+    "kg_with_unit %lf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f kg"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f 千克"
+          }
+        }
+      }
+    },
     "library" : {
       "localizations" : {
         "en" : {
@@ -628,6 +1154,22 @@
         }
       }
     },
+    "light_activity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light Activity"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻度活动"
+          }
+        }
+      }
+    },
     "lunch" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -641,6 +1183,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "午餐"
+          }
+        }
+      }
+    },
+    "macros_goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Macros"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "营养素目标"
+          }
+        }
+      }
+    },
+    "male" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Male"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "男性"
           }
         }
       }
@@ -678,18 +1252,18 @@
         }
       }
     },
-    "move_card_right" : {
+    "moderate" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move Card Right"
+            "value" : "Moderate"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "向右移动卡片"
+            "value" : "中等活动"
           }
         }
       }
@@ -721,7 +1295,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "新建套餐"
           }
         }
@@ -733,7 +1307,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No history yet"
+            "value" : "No History Yet"
           }
         },
         "zh-Hans" : {
@@ -825,22 +1399,6 @@
         }
       }
     },
-    "pin" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pin"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "置顶"
-          }
-        }
-      }
-    },
     "pinned" : {
       "localizations" : {
         "en" : {
@@ -853,6 +1411,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "置顶"
+          }
+        }
+      }
+    },
+    "protein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protein"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蛋白质"
+          }
+        }
+      }
+    },
+    "protein_goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protein Goal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蛋白质目标"
+          }
+        }
+      }
+    },
+    "protein_per_unit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "protein per unit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每单位蛋白质"
           }
         }
       }
@@ -923,6 +1529,22 @@
         }
       }
     },
+    "sedentary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedentary"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "久坐"
+          }
+        }
+      }
+    },
     "set_name" : {
       "localizations" : {
         "en" : {
@@ -951,6 +1573,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "套餐"
+          }
+        }
+      }
+    },
+    "settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
+      }
+    },
+    "sex" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sex"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "性别"
           }
         }
       }
@@ -1039,6 +1693,22 @@
         }
       }
     },
+    "total" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总消耗"
+          }
+        }
+      }
+    },
     "total_today" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1072,18 +1742,50 @@
         }
       }
     },
-    "unpin" : {
+    "use_as_daily_goal" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "unpin"
+            "value" : "Use as Daily Goal"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "取消置顶"
+            "value" : "按活动系数估算"
+          }
+        }
+      }
+    },
+    "very_active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Active"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "非常活跃"
+          }
+        }
+      }
+    },
+    "weight_kg" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight (kg)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "体重（千克）"
           }
         }
       }

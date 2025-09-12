@@ -3,7 +3,7 @@ import SwiftUI
 struct ExpandedKcalCard: View {
     @Binding var card: MealCard
     var namespace: Namespace.ID
-    var onFinish: (Int) -> Void
+    var onFinish: (Int, Int, Int, Int) -> Void
     var onAutoUpdate: () -> Void
 
     @State private var showingPicker = false
@@ -13,15 +13,27 @@ struct ExpandedKcalCard: View {
     private var manualTextBinding: Binding<String> {
         Binding(
             get: { card.manualKcalText ?? "" },
-            set: { card.manualKcalText = $0; persistNowAndUpdateKcal() }
+            set: { card.manualKcalText = $0; persistNowAndUpdateTotals() }
         )
     }
 
-    // 总热量（项目合计 + 额外手动）
+    // 汇总（kcal 允许手动加成；三大营养素不加手动）
+    private var totalFromItemsKcal: Double {
+        card.items.reduce(0.0) { $0 + $1.kcal }
+    }
+    private var totalFromItemsProtein: Double {
+        card.items.reduce(0.0) { $0 + $1.protein }
+    }
+    private var totalFromItemsCarb: Double {
+        card.items.reduce(0.0) { $0 + $1.carb }
+    }
+    private var totalFromItemsFat: Double {
+        card.items.reduce(0.0) { $0 + $1.fat }
+    }
+
     private var totalKcal: Int {
-        let sumFromItems = card.items.reduce(0.0) { $0 + $1.kcal }
         let extraManual = Int(card.manualKcalText ?? "") ?? 0
-        return Int(sumFromItems.rounded()) + max(0, extraManual)
+        return Int(totalFromItemsKcal.rounded()) + max(0, extraManual)
     }
 
     var body: some View {
@@ -43,14 +55,13 @@ struct ExpandedKcalCard: View {
                     VStack(spacing: 14) {
                         header
 
-                        // 直接滚动三块内容（无中间大容器）
                         ScrollView {
                             VStack(spacing: 12) {
                                 if !card.items.isEmpty {
-                                    itemsSection   // 列表块
+                                    itemsSection
                                 }
-                                addSection        // 添加按钮块
-                                manualKcalSection // 手动 kcal 块
+                                addSection
+                                manualKcalSection
                             }
                             .padding(14)
                         }
@@ -73,7 +84,7 @@ struct ExpandedKcalCard: View {
                     if !exists {
                         let q: Double = (food.unit == .perPiece) ? 1 : 100
                         card.items.append(FoodPortion(template: food, defaultQuantity: q))
-                        persistNowAndUpdateKcal()
+                        persistNowAndUpdateTotals()
                     }
                 },
                 onSelectMealSet: { portions in
@@ -81,9 +92,17 @@ struct ExpandedKcalCard: View {
                     let existingNames = Set(card.items.map { $0.localizedName })
                     let newOnes = portions.filter { !existingNames.contains($0.localizedName) }
                     card.items.append(contentsOf: newOnes)
-                    persistNowAndUpdateKcal()
+                    persistNowAndUpdateTotals()
                 }
             )
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("done") {
+                    dismissKeyboard()
+                }
+            }
         }
     }
 
@@ -112,9 +131,7 @@ struct ExpandedKcalCard: View {
         .padding(.top, 14)
     }
 
-    // MARK: - 三块内容（无外层大容器）
-
-    /// 列表块：已添加的食物行
+    // MARK: - 三块内容
     private var itemsSection: some View {
         VStack(spacing: 0) {
             ForEach($card.items) { $item in
@@ -131,7 +148,6 @@ struct ExpandedKcalCard: View {
         )
     }
 
-    /// 添加按钮块
     private var addSection: some View {
         Button {
             showingPicker = true
@@ -146,7 +162,6 @@ struct ExpandedKcalCard: View {
         )
     }
 
-    /// 手动 kcal 块
     private var manualKcalSection: some View {
         HStack {
             Text(LocalizedStringKey("extra_add_kcal")).foregroundStyle(.secondary)
@@ -167,9 +182,7 @@ struct ExpandedKcalCard: View {
     // MARK: - Bottom Bar
     private var bottomBar: some View {
         HStack(spacing: 12) {
-            Button {
-                finish()
-            } label: {
+            Button { finish() } label: {
                 Text(String(localized: "finish"))
                     .bold()
                     .frame(maxWidth: .infinity)
@@ -216,7 +229,7 @@ struct ExpandedKcalCard: View {
                     Button {
                         item.quantity.wrappedValue = max(1, item.quantity.wrappedValue - step)
                         enforceDigitLimit(for: &item.wrappedValue, maxValue: Double(maxValue), integerOnly: true)
-                        persistNowAndUpdateKcal()
+                        persistNowAndUpdateTotals()
                     } label: {
                         Image(systemName: "minus.circle.fill")
                             .foregroundColor(.blue)
@@ -243,7 +256,7 @@ struct ExpandedKcalCard: View {
                             )
                             .onChange(of: item.quantity.wrappedValue) { _, _ in
                                 enforceDigitLimit(for: &item.wrappedValue, maxValue: Double(maxValue), integerOnly: true)
-                                persistNowAndUpdateKcal()
+                                persistNowAndUpdateTotals()
                             }
 
                         Text(item.wrappedValue.unitShortLocalized)
@@ -256,7 +269,7 @@ struct ExpandedKcalCard: View {
                     Button {
                         item.quantity.wrappedValue += step
                         enforceDigitLimit(for: &item.wrappedValue, maxValue: Double(maxValue), integerOnly: true)
-                        persistNowAndUpdateKcal()
+                        persistNowAndUpdateTotals()
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .foregroundColor(.blue)
@@ -272,11 +285,11 @@ struct ExpandedKcalCard: View {
                 Button {
                     withAnimation(.easeInOut) {
                         card.items.removeAll { $0.id == item.wrappedValue.id }
-                        persistNowAndUpdateKcal()
+                        persistNowAndUpdateTotals()
                     }
                 } label: {
                     Image(systemName: "trash")
-                            .foregroundColor(.red)   // ✅ 强制红色
+                        .foregroundColor(.red)
                 }
                 .tint(.red)
                 .buttonStyle(.plain)
@@ -302,7 +315,7 @@ struct ExpandedKcalCard: View {
             .onChanged { value in dragOffset = max(0, value.translation.height) }
             .onEnded { value in
                 if value.translation.height > 120 {
-                    finish()  // 下拉超过阈值也 Finish
+                    finish()
                 } else {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
                         dragOffset = 0
@@ -311,14 +324,30 @@ struct ExpandedKcalCard: View {
             }
     }
 
+    private func dismissKeyboard() {
+    #if canImport(UIKit)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                        to: nil, from: nil, for: nil)
+    #endif
+    }
+
     // MARK: - Persist + Finish
-    private func persistNowAndUpdateKcal() {
+    private func persistNowAndUpdateTotals() {
+        // 写回卡片的 kcal / macros
         card.kcal = totalKcal
+        card.protein = Int(totalFromItemsProtein.rounded())
+        card.carb    = Int(totalFromItemsCarb.rounded())
+        card.fat     = Int(totalFromItemsFat.rounded())
         onAutoUpdate()
     }
 
     private func finish() {
-        persistNowAndUpdateKcal()
-        onFinish(totalKcal)   // 通知上层退出
-    }
+            persistNowAndUpdateTotals()
+            onFinish(                          // ✅ 传四个
+                totalKcal,
+                Int(totalFromItemsProtein.rounded()),
+                Int(totalFromItemsCarb.rounded()),
+                Int(totalFromItemsFat.rounded())
+            )
+        }
 }

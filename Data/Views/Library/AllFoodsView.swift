@@ -31,24 +31,52 @@ struct AllFoodsView: View {
 
             if !pinned.isEmpty {
                 Section(String(localized: "pinned")) {
-                    ForEach(pinned) {
-                        RowFood(food: $0, onEdit: { editingFood = $0 })
+                    ForEach(pinned) { food in
+                        LibraryRowTemplate(food: food)
+                            .contentShape(Rectangle())
                             .listRowSeparator(.visible)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                Button(String(localized: "edit")) {
+                                    editingFood = food
+                                }
+                                .tint(.blue)
+
+                                Button(role: .destructive) {
+                                    context.delete(food)
+                                    try? context.save()
+                                } label: {
+                                    Text(String(localized: "delete"))
+                                }
+                            }
                     }
                 }
             }
 
             Section(String(localized: "all_foods")) {
-                ForEach(others) {
-                    RowFood(food: $0, onEdit: { editingFood = $0 })
+                ForEach(others) { food in
+                    LibraryRowTemplate(food: food)
+                        .contentShape(Rectangle())
                         .listRowSeparator(.visible)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(String(localized: "edit")) {
+                                editingFood = food
+                            }
+                            .tint(.blue)
+
+                            Button(role: .destructive) {
+                                context.delete(food)
+                                try? context.save()
+                            } label: {
+                                Text(String(localized: "delete"))
+                            }
+                        }
                 }
             }
         }
-        .listStyle(.insetGrouped)                 // 透明背景风格
-        .scrollContentBackground(.hidden)         // 去掉默认灰底
+        .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
         .navigationTitle(String(localized: "food_library"))
-        .navigationBarTitleDisplayMode(.inline)   // 标题 inline
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(
             text: $query,
             placement: .navigationBarDrawer(displayMode: .always),
@@ -56,71 +84,20 @@ struct AllFoodsView: View {
         )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showingAdd = true
-                } label: {
+                Button { showingAdd = true } label: {
                     Text(String(localized: "add_food"))
                 }
             }
         }
-        .sheet(isPresented: $showingAdd) { AddFoodView() }
+        .sheet(isPresented: $showingAdd) {
+            AddFoodView()
+                .presentationDetents([.medium, .large])
+                .presentationCornerRadius(20)
+        }
         .sheet(item: $editingFood) { food in
             EditFoodView(food: food)
+                .presentationDetents([.medium, .large])
+                .presentationCornerRadius(20)
         }
     }
 }
-
-// 行视图：编辑/删除保留；新增“置顶/取消置顶”按钮（行内）
-private struct RowFood: View {
-    @Environment(\.modelContext) private var context
-    @Bindable var food: FoodTemplate
-    var onEdit: (FoodTemplate) -> Void
-
-    var body: some View {
-        HStack(spacing: 8) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(food.localizedName).bold()
-                Text(food.unitLabel)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-
-            Spacer(minLength: 8)
-
-            // 右侧：kcal + pin按钮
-            HStack(spacing: 10) {
-                Text("\(Int(food.kcalPerUnit)) \(String(localized: "kcal_unit"))")
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
-
-                Button {
-                    food.isPinned.toggle()
-                    try? context.save()
-                } label: {
-                    Image(systemName: food.isPinned ? "pin.fill" : "pin")
-                        .imageScale(.medium)
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(food.isPinned ? .orange : .secondary)
-                .accessibilityLabel(
-                    Text(food.isPinned ? String(localized: "unpin") : String(localized: "pin"))
-                )
-            }
-        }
-        .contentShape(Rectangle())
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-            Button(String(localized: "edit")) {
-                onEdit(food)
-            }
-            .tint(.blue)
-
-            Button(role: .destructive) {
-                context.delete(food)
-                try? context.save()
-            } label: {
-                Text(String(localized: "delete"))
-            }
-        }
-    }
-}
-
