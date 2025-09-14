@@ -58,9 +58,20 @@ struct TodayView: View {
                     }
                     .padding(16)
                     .contentShape(Rectangle())
-                    .gesture(tapToExitEditing, including: .gesture)
                 }
                 .allowsHitTesting(!hasAnyOverlayLocal)
+                
+                if isEditing && !hasAnyOverlayLocal {
+                        Color.clear
+                            .contentShape(Rectangle())
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    isEditing = false
+                                }
+                            }
+                            .zIndex(0.5)
+                    }
 
                 if showingOverlayContent {
                     Color.black.opacity(0.25)

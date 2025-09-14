@@ -1,23 +1,58 @@
 import SwiftUI
 
+// 可视化维度
+enum HistoryMetric: String, CaseIterable, Identifiable {
+    case kcal
+    case protein
+    case carb
+    case fat
+
+    var id: String { rawValue }
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .kcal:    return LocalizedStringKey("calories")   // 建议在本地化里配“热量”
+        case .protein: return LocalizedStringKey("protein")    // “蛋白质”
+        case .carb:    return LocalizedStringKey("carb")       // “碳水”
+        case .fat:     return LocalizedStringKey("fat")        // “脂肪”
+        }
+    }
+}
+
 struct HistoryView: View {
     @State private var records: [HistoryRecord] = []
     @State private var tz = TimeZone.current
     @State private var selectedIndex: Int? = nil
     @State private var confirmDeleteAll = false
 
+    // 新增：当前展示维度（默认热量）
+    @State private var metric: HistoryMetric = .kcal
+
     private let recentLimit = 15
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
+
+                // ▶️ 顶部维度选择（分段控制）
+                Picker("", selection: $metric) {
+                    ForEach(HistoryMetric.allCases) { m in
+                        Text(m.title).tag(m)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 16)
+                .padding(.top, 8)
+
                 HistoryChartView(
                     records: recentBars,
                     selectedIndex: $selectedIndex,
-                    tz: tz
+                    tz: tz,
+                    metric: metric              // ⬅️ 传入所选维度
                 )
-                .padding(.horizontal, 16)
-                .padding(.top, 12)
+                .padding(Edge.Set.horizontal, 16)
+                .padding(Edge.Set.top, 4)
+
 
                 HistoryListView(
                     records: recentBars,
@@ -39,14 +74,12 @@ struct HistoryView: View {
                             confirmDeleteAll = true
                         } label: {
                             Text(String(localized: "clear_history"))
-                                .foregroundStyle(.red)   // 纯文字红色
+                                .foregroundStyle(.red)
                         }
                         .buttonStyle(.borderless)
                     }
                 }
             }
-
-
             .alert(
                 Text(String(localized: "confirm_delete_all_title")),
                 isPresented: $confirmDeleteAll

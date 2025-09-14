@@ -6,10 +6,33 @@ struct HistoryChartView: View {
     @Binding var selectedIndex: Int?
     let tz: TimeZone
 
+    // 新增：当前维度
+    let metric: HistoryMetric
+
     private let chartHeight: CGFloat = 160
     private let cardRadius: CGFloat = 16
 
     private func slotX(forIndex i: Int) -> Double { Double(i + 1) }
+
+    // 取值：根据维度返回对应数值（统一为 Int）
+    private func value(of r: HistoryRecord) -> Int {
+        switch metric {
+        case .kcal:    return r.totalKcal
+        case .protein: return r.totalProtein
+        case .carb:    return r.totalCarb
+        case .fat:     return r.totalFat
+        }
+    }
+
+    // 注释文案（单位本地化）
+    private func annotationText(_ v: Int) -> Text {
+        switch metric {
+        case .kcal:
+            return Text("kcal_with_unit \(Int64(v))")
+        case .protein, .carb, .fat:
+            return Text("g_with_unit \(v)")
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -26,10 +49,12 @@ struct HistoryChartView: View {
                 } else {
                     let m = records.count
                     let lastIdx = m - 1
+
+                    // 线数据与最大值根据维度切换
                     let lineData: [(x: Double, y: Double)] = records.enumerated().map { (i, r) in
-                        (x: slotX(forIndex: i), y: Double(r.totalKcal))
+                        (x: slotX(forIndex: i), y: Double(value(of: r)))
                     }
-                    let maxValue = Double(records.map { $0.totalKcal }.max() ?? 0)
+                    let maxValue = Double(records.map { value(of: $0) }.max() ?? 0)
                     let maxY = maxValue * 1.25
                     let bubbleOffset = maxValue * 0.05
 
@@ -48,16 +73,18 @@ struct HistoryChartView: View {
                                 isToday ? (isSelected ? barOrangeSelected : barOrange)
                                         : (isSelected ? barBlueSelected   : barBlue)
 
+                            let yVal = value(of: r)
+
                             BarMark(
                                 x: .value("x", slotX(forIndex: i)),
-                                y: .value("y", r.totalKcal),
+                                y: .value("y", yVal),
                                 width: .fixed(6)
                             )
                             .foregroundStyle(color)
 
                             PointMark(
                                 x: .value("x", slotX(forIndex: i)),
-                                y: .value("y", r.totalKcal)
+                                y: .value("y", yVal)
                             )
                             .symbol {
                                 Circle()
@@ -68,11 +95,11 @@ struct HistoryChartView: View {
                             if isSelected {
                                 PointMark(
                                     x: .value("x", slotX(forIndex: i)),
-                                    y: .value("y", Double(r.totalKcal) + bubbleOffset)
+                                    y: .value("y", Double(yVal) + bubbleOffset)
                                 )
                                 .opacity(0)
                                 .annotation(position: .top) {
-                                    Text("kcal_with_unit \(Int64(r.totalKcal))")
+                                    annotationText(yVal)
                                         .font(.caption)
                                         .monospacedDigit()
                                         .foregroundStyle(.primary)
@@ -166,8 +193,6 @@ struct HistoryChartView: View {
                 }
             }
     }
-
-
 
     private func startLabel(_ d: Date) -> String {
         let f = DateFormatter()

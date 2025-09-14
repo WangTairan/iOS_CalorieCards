@@ -9,15 +9,33 @@ struct ExpandedKcalCard: View {
     @State private var showingPicker = false
     @State private var dragOffset: CGFloat = 0
 
-    // 手动 kcal 文本绑定：修改即更新
-    private var manualTextBinding: Binding<String> {
+    // MARK: - 手动输入绑定（kcal + 三大营养素）
+    private var manualKcalBinding: Binding<String> {
         Binding(
             get: { card.manualKcalText ?? "" },
             set: { card.manualKcalText = $0; persistNowAndUpdateTotals() }
         )
     }
+    private var manualProteinBinding: Binding<String> {
+        Binding(
+            get: { card.manualProteinText ?? "" },
+            set: { card.manualProteinText = $0; persistNowAndUpdateTotals() }
+        )
+    }
+    private var manualCarbBinding: Binding<String> {
+        Binding(
+            get: { card.manualCarbText ?? "" },
+            set: { card.manualCarbText = $0; persistNowAndUpdateTotals() }
+        )
+    }
+    private var manualFatBinding: Binding<String> {
+        Binding(
+            get: { card.manualFatText ?? "" },
+            set: { card.manualFatText = $0; persistNowAndUpdateTotals() }
+        )
+    }
 
-    // 汇总（kcal 允许手动加成；三大营养素不加手动）
+    // MARK: - 汇总（kcal 允许手动加成；三大营养素也允许手动加成）
     private var totalFromItemsKcal: Double {
         card.items.reduce(0.0) { $0 + $1.kcal }
     }
@@ -31,16 +49,30 @@ struct ExpandedKcalCard: View {
         card.items.reduce(0.0) { $0 + $1.fat }
     }
 
+    // 额外手动（非法/空 → 0；不为负）
+    private var extraManualKcal: Int { max(0, Int(card.manualKcalText ?? "") ?? 0) }
+    private var extraManualProtein: Int { max(0, Int(card.manualProteinText ?? "") ?? 0) }
+    private var extraManualCarb: Int    { max(0, Int(card.manualCarbText ?? "") ?? 0) }
+    private var extraManualFat: Int     { max(0, Int(card.manualFatText ?? "") ?? 0) }
+
     private var totalKcal: Int {
-        let extraManual = Int(card.manualKcalText ?? "") ?? 0
-        return Int(totalFromItemsKcal.rounded()) + max(0, extraManual)
+        Int(totalFromItemsKcal.rounded()) + extraManualKcal
+    }
+    private var totalProtein: Int {
+        Int(totalFromItemsProtein.rounded()) + extraManualProtein
+    }
+    private var totalCarb: Int {
+        Int(totalFromItemsCarb.rounded()) + extraManualCarb
+    }
+    private var totalFat: Int {
+        Int(totalFromItemsFat.rounded()) + extraManualFat
     }
 
     var body: some View {
         ZStack {
             Color.black.opacity(0.2)
                 .ignoresSafeArea()
-                .onTapGesture { finish() } // 点击幕布关闭
+                .onTapGesture { finish() }
 
             VStack {
                 Spacer(minLength: 0)
@@ -51,7 +83,6 @@ struct ExpandedKcalCard: View {
                         .shadow(radius: CardStyle.shadowRadius, y: CardStyle.shadowYOffset)
                         .matchedGeometryEffect(id: card.id, in: namespace, isSource: false)
 
-                    // —— 卡片内容（扁平：header + 三块 + bottomBar）——
                     VStack(spacing: 14) {
                         header
 
@@ -61,7 +92,7 @@ struct ExpandedKcalCard: View {
                                     itemsSection
                                 }
                                 addSection
-                                manualKcalSection
+                                manualKcalSection   // ⬅️ 下方包含“手动三大营养素”
                             }
                             .padding(14)
                         }
@@ -88,7 +119,6 @@ struct ExpandedKcalCard: View {
                     }
                 },
                 onSelectMealSet: { portions in
-                    // 过滤掉重复的食物（按名字）
                     let existingNames = Set(card.items.map { $0.localizedName })
                     let newOnes = portions.filter { !existingNames.contains($0.localizedName) }
                     card.items.append(contentsOf: newOnes)
@@ -99,9 +129,7 @@ struct ExpandedKcalCard: View {
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                Button("done") {
-                    dismissKeyboard()
-                }
+                Button("done") { dismissKeyboard() }
             }
         }
     }
@@ -162,15 +190,48 @@ struct ExpandedKcalCard: View {
         )
     }
 
+    // ✅ 额外热量 + 手动三大营养素（连在一起，风格一致）
     private var manualKcalSection: some View {
-        HStack {
-            Text(LocalizedStringKey("extra_add_kcal")).foregroundStyle(.secondary)
-            Spacer()
-            TextField("0", text: manualTextBinding)
-                .keyboardType(.numberPad)
-                .multilineTextAlignment(.trailing)
-                .frame(width: 90)
-            Text(LocalizedStringKey("kcal_unit")).foregroundStyle(.secondary)
+        VStack(spacing: 10) {
+            HStack {
+                Text(LocalizedStringKey("extra_add_kcal")).foregroundStyle(.secondary)
+                Spacer()
+                TextField("0", text: manualKcalBinding)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 90)
+                Text(LocalizedStringKey("kcal_unit")).foregroundStyle(.secondary)
+            }
+
+            HStack {
+                Text(LocalizedStringKey("extra_add_protein")).foregroundStyle(.secondary)
+                Spacer()
+                TextField("0", text: manualProteinBinding)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 90)
+                Text(LocalizedStringKey("g_unit")).foregroundStyle(.secondary)
+            }
+
+            HStack {
+                Text(LocalizedStringKey("extra_add_carb")).foregroundStyle(.secondary)
+                Spacer()
+                TextField("0", text: manualCarbBinding)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 90)
+                Text(LocalizedStringKey("g_unit")).foregroundStyle(.secondary)
+            }
+
+            HStack {
+                Text(LocalizedStringKey("extra_add_fat")).foregroundStyle(.secondary)
+                Spacer()
+                TextField("0", text: manualFatBinding)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 90)
+                Text(LocalizedStringKey("g_unit")).foregroundStyle(.secondary)
+            }
         }
         .padding(ContentBlockStyle.padding)
         .background(
@@ -195,16 +256,17 @@ struct ExpandedKcalCard: View {
         .padding(.bottom, 14)
     }
 
-    // MARK: - Row
+    // MARK: - Row（三行：标题+热量 / PCF / 数量控制+删除）
     @ViewBuilder
     private func itemRow(item: Binding<FoodPortion>) -> some View {
         let isPiece = (item.wrappedValue.unit == .perPiece)
         let fieldWidth = ControlsStyle.qtyFieldWidth5Digits
         let unitWidth  = ControlsStyle.unitLabelWidth
-        let step: Double = isPiece ? 1 : 50
+        let step: Double = isPiece ? 1 : 20
         let maxValue: Double = isPiece ? 999 : 99_999
 
         VStack(alignment: .leading, spacing: 6) {
+            // 第 1 行：名字 + 热量
             HStack(spacing: 8) {
                 Text(item.wrappedValue.localizedName)
                     .font(.headline)
@@ -221,6 +283,17 @@ struct ExpandedKcalCard: View {
                     .frame(minWidth: 0, maxWidth: ControlsStyle.kcalColumnMaxWidth, alignment: .trailing)
             }
 
+            // 第 2 行：PCF
+            HStack(spacing: 12) {
+                macroText(labelKey: "macro_p", value: item.wrappedValue.protein)
+                macroText(labelKey: "macro_c", value: item.wrappedValue.carb)
+                macroText(labelKey: "macro_f", value: item.wrappedValue.fat)
+            }
+            .font(.caption2)
+            .foregroundStyle(.secondary)
+            .monospacedDigit()
+
+            // 第 3 行：数量控制 + 删除
             HStack(alignment: .center, spacing: 12) {
                 HStack(spacing: 0) {
                     let canDecrement = item.quantity.wrappedValue > 1
@@ -309,6 +382,20 @@ struct ExpandedKcalCard: View {
         portion.quantity = q
     }
 
+    private func macroText(labelKey: String, value: Double) -> some View {
+        HStack(spacing: 4) {
+            Text(LocalizedStringKey(labelKey))
+            Text(fmt(value)).monospacedDigit()
+            Text(String(localized: "g_unit"))
+        }
+    }
+
+    private func fmt(_ x: Double) -> String {
+        let v = (x * 10).rounded() / 10
+        if abs(v.rounded() - v) < 0.0001 { return String(Int(v)) }
+        return String(format: "%.1f", v)
+    }
+
     // MARK: - Gestures
     private var dragToClose: some Gesture {
         DragGesture()
@@ -333,21 +420,17 @@ struct ExpandedKcalCard: View {
 
     // MARK: - Persist + Finish
     private func persistNowAndUpdateTotals() {
-        // 写回卡片的 kcal / macros
+        // kcal
         card.kcal = totalKcal
-        card.protein = Int(totalFromItemsProtein.rounded())
-        card.carb    = Int(totalFromItemsCarb.rounded())
-        card.fat     = Int(totalFromItemsFat.rounded())
+        // macros（含手动加成）
+        card.protein = totalProtein
+        card.carb    = totalCarb
+        card.fat     = totalFat
         onAutoUpdate()
     }
 
     private func finish() {
-            persistNowAndUpdateTotals()
-            onFinish(                          // ✅ 传四个
-                totalKcal,
-                Int(totalFromItemsProtein.rounded()),
-                Int(totalFromItemsCarb.rounded()),
-                Int(totalFromItemsFat.rounded())
-            )
-        }
+        persistNowAndUpdateTotals()
+        onFinish(totalKcal, totalProtein, totalCarb, totalFat)
+    }
 }

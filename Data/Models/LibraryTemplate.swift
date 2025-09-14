@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 private enum MacroCol {
-    static let width: CGFloat = 40  // 固定列宽；可按需要调节
+    static let width: CGFloat = 60  // 可按需要调整
 }
 
 struct LibraryRowTemplate: View {
@@ -21,7 +21,7 @@ struct LibraryRowTemplate: View {
 
                 Spacer()
 
-                Text("\(Int(food.kcalPerUnit)) kcal")
+                Text("kcal_with_unit \(Int64(food.kcalPerUnit))")
                     .font(.subheadline)
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
@@ -37,7 +37,7 @@ struct LibraryRowTemplate: View {
                 .padding(.leading, 6)
             }
 
-            // 第二行：单位 + P/C/F
+            // 第二行：单位 + 本地化的 P/C/F
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(food.unitLabel)
                     .font(.caption2)
@@ -47,9 +47,9 @@ struct LibraryRowTemplate: View {
 
                 Grid(alignment: .trailing, horizontalSpacing: 8) {
                     GridRow {
-                        macroCol(prefix: "protein", value: food.proteinPerUnit)
-                        macroCol(prefix: "carb", value: food.carbPerUnit)
-                        macroCol(prefix: "fat", value: food.fatPerUnit)
+                        macroCol(labelKey: "macro_p", value: food.proteinPerUnit) // ✅ 本地化
+                        macroCol(labelKey: "macro_c", value: food.carbPerUnit)    // ✅ 本地化
+                        macroCol(labelKey: "macro_f", value: food.fatPerUnit)     // ✅ 本地化
                     }
                 }
             }
@@ -58,10 +58,11 @@ struct LibraryRowTemplate: View {
         .contentShape(Rectangle())
     }
 
+    // 固定列宽 + 右对齐 + 等宽数字；label 使用本地化 key
     @ViewBuilder
-    private func macroCol(prefix: String, value: Double) -> some View {
+    private func macroCol(labelKey: String, value: Double) -> some View {
         HStack(spacing: 2) {
-            Text(prefix)
+            Text(LocalizedStringKey(labelKey))     // "macro_p" / "macro_c" / "macro_f"
             Text(fmt(value)).monospacedDigit()
             Text(String(localized: "g_unit"))
         }

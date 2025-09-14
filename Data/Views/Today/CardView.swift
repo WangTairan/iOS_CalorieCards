@@ -37,21 +37,21 @@ struct CardView: View {
 
                 Spacer()
 
-                // 底部：kcal + pcf
-                VStack(alignment: .leading, spacing: 2) {
+                // 底部：PCF 三行 + kcal
+                VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        macroRow(labelKey: "macro_p", value: Double(card.protein))
+                        macroRow(labelKey: "macro_c", value: Double(card.carb))
+                        macroRow(labelKey: "macro_f", value: Double(card.fat))
+                    }
+                    .font(.caption2)
+                    .foregroundStyle(.white.opacity(0.92))
+
                     Text("kcal_with_unit \(Int64(card.kcal))")
                         .font(.system(size: 28, weight: .bold))
                         .monospacedDigit()
                         .foregroundStyle(.white)
-
-                    // ⬇️ 新增：三大营养素一行
-                    HStack(spacing: 12) {
-                        macroText(prefix: "P", value: Double(card.protein))
-                        macroText(prefix: "C", value: Double(card.carb))
-                        macroText(prefix: "F", value: Double(card.fat))
-                    }
-                    .font(.caption2)
-                    .foregroundStyle(.white.opacity(0.9))
+                        .padding(.top, 2)
                 }
             }
             .padding(contentPadding)
@@ -98,10 +98,10 @@ struct CardView: View {
         .contentShape(RoundedRectangle(cornerRadius: 18))
     }
 
-    // MARK: - Helper
-    private func macroText(prefix: String, value: Double) -> some View {
-        HStack(spacing: 2) {
-            Text(prefix)
+    // MARK: - Helpers
+    private func macroRow(labelKey: String, value: Double) -> some View {
+        HStack(spacing: 4) {
+            Text(LocalizedStringKey(labelKey))
             Text(fmt(value)).monospacedDigit()
             Text(String(localized: "g_unit"))
         }

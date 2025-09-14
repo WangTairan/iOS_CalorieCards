@@ -4,11 +4,17 @@ import UIKit
 struct MealCard: Identifiable, Codable, Equatable, Hashable {
     var name: CardName
     var kcal: Int
-    var protein: Int        // 新增：蛋白质（g）
-    var carb: Int           // 新增：碳水（g）
-    var fat: Int            // 新增：脂肪（g）
+    var protein: Int            // 蛋白质（g）
+    var carb: Int               // 碳水（g）
+    var fat: Int                // 脂肪（g）
     var items: [FoodPortion]
+
+    // 额外手动输入（kcal 已有；新增三大营养素手动文本，便于持久化）
     var manualKcalText: String?
+    var manualProteinText: String?   // 新增
+    var manualCarbText: String?      // 新增
+    var manualFatText: String?       // 新增
+
     var appearance: CardAppearance?
 
     var id: String { name.id }
@@ -21,6 +27,9 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
         fat: Int = 0,
         items: [FoodPortion] = [],
         manualKcalText: String? = nil,
+        manualProteinText: String? = nil,
+        manualCarbText: String? = nil,
+        manualFatText: String? = nil,
         appearance: CardAppearance? = nil
     ) {
         self.name = name
@@ -30,6 +39,9 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
         self.fat = fat
         self.items = items
         self.manualKcalText = manualKcalText
+        self.manualProteinText = manualProteinText
+        self.manualCarbText = manualCarbText
+        self.manualFatText = manualFatText
         self.appearance = appearance
     }
 
@@ -40,7 +52,7 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
     var displaySymbol: String { effectiveAppearance.symbol }
     var displayColor: Color  { effectiveAppearance.color }
 
-    /// 返回清零后的卡片（保留样式、名字，但去掉数据）
+    /// 返回清零后的卡片（保留样式、名字，但去掉数据与手动文本）
     func cleared() -> MealCard {
         MealCard(
             name: self.name,
@@ -50,6 +62,9 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
             fat: 0,
             items: [],
             manualKcalText: nil,
+            manualProteinText: nil,
+            manualCarbText: nil,
+            manualFatText: nil,
             appearance: self.appearance
         )
     }
@@ -85,7 +100,7 @@ extension Color {
 
         self = Color(red: r, green: g, blue: b)
     }
-    
+
     // sRGB → "#RRGGBB"
     var hexRGB: String {
         let ui = UIColor(self)
@@ -97,10 +112,9 @@ extension Color {
         let R = Int(round(r * 255))
         let G = Int(round(g * 255))
         let B = Int(round(b * 255))
-        return String(format: "#%02X%02X%02X", R, G, B) // ✅ 正确格式
+        return String(format: "#%02X%02X%02X", R, G, B)
     }
 }
-
 
 struct DefaultAppearance {
     static func `for`(_ name: CardName) -> CardAppearance {

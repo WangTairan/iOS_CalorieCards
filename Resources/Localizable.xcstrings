@@ -20,9 +20,6 @@
         }
       }
     },
-    "%lld kcal" : {
-
-    },
     "%lld/%lld%@" : {
       "localizations" : {
         "en" : {
@@ -384,6 +381,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "早餐"
+          }
+        }
+      }
+    },
+    "calories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卡路里"
           }
         }
       }
@@ -780,6 +793,38 @@
         }
       }
     },
+    "extra_add_carb" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extra Carbs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "额外添加碳水"
+          }
+        }
+      }
+    },
+    "extra_add_fat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extra Fat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "额外添加脂肪"
+          }
+        }
+      }
+    },
     "extra_add_kcal" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -793,6 +838,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "额外添加热量"
+          }
+        }
+      }
+    },
+    "extra_add_protein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extra Protein"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "额外添加蛋白质"
           }
         }
       }
@@ -960,6 +1021,23 @@
         }
       }
     },
+    "g_with_unit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ g"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 克"
+          }
+        }
+      }
+    },
     "g_with_unit %lld" : {
       "localizations" : {
         "en" : {
@@ -970,7 +1048,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%lld 克"
           }
         }
@@ -1183,6 +1261,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "午餐"
+          }
+        }
+      }
+    },
+    "macro_c" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "碳水"
+          }
+        }
+      }
+    },
+    "macro_f" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "F"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脂肪"
+          }
+        }
+      }
+    },
+    "macro_p" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "P"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蛋白"
           }
         }
       }
