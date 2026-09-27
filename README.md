@@ -93,3 +93,7 @@ The nutrition values included with the project are general reference data. They 
 ## Project status
 
 This is a finished personal project and is no longer under active development.
+
+## License
+
+Calorie Cards is available under the [MIT License](LICENSE).
