@@ -73,6 +73,5 @@
     { "nameZH": "鸭肝（生）", "nameEN": "Duck liver (raw)", "unit": "per100g", "kcalPerUnit": 133, "proteinPerUnit": 18.0, "carbPerUnit": 3.0, "fatPerUnit": 4.0 },
     { "nameZH": "鸭心（生）", "nameEN": "Duck heart (raw)", "unit": "per100g", "kcalPerUnit": 153, "proteinPerUnit": 16.0, "carbPerUnit": 0.0, "fatPerUnit": 9.0 },
     { "nameZH": "鸭肾（生）", "nameEN": "Duck kidney (raw)", "unit": "per100g", "kcalPerUnit": 130, "proteinPerUnit": 17.0, "carbPerUnit": 0.0, "fatPerUnit": 6.0 },
-    { "nameZH": "鸭胗（生）", "nameEN": "Duck gizzard (raw)", "unit": "per100g", "kcalPerUnit": 94, "proteinPerUnit": 17.0, "carbPerUnit": 0.0, "fatPerUnit": 2.0 },
+    { "nameZH": "鸭胗（生）", "nameEN": "Duck gizzard (raw)", "unit": "per100g", "kcalPerUnit": 94, "proteinPerUnit": 17.0, "carbPerUnit": 0.0, "fatPerUnit": 2.0 }
 ]
-

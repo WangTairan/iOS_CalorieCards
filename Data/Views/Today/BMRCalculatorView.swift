@@ -166,7 +166,7 @@ struct BMRCalculatorView: View {
                 HStack {
                     Text(String(localized: "carb_goal"))
                     Spacer()
-                    Text("g_with_unit \(Int64(proteinGoal))")
+                    Text("g_with_unit \(Int64(carbGoal))")
                         .monospacedDigit()
                 }
                 HStack {

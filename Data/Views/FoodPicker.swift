@@ -5,7 +5,6 @@ import Foundation
 enum FoodTab: String, CaseIterable { case pinned, builtin, mealSets }
 enum FoodPickerMode { case full, templatesOnly }
 
-
 struct FoodPicker: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -20,20 +19,20 @@ struct FoodPicker: View {
     @Query private var templates: [FoodTemplate]
     @Query(sort: \MealSet.name) private var mealSets: [MealSet]
 
-    // 回调：单品 & 套餐
+    // 回调：单品 & 套餐（⬅️ 套餐改为传 MealSet）
     let onSelectTemplate: (FoodTemplate) -> Void
-    let onSelectMealSet: ([FoodPortion]) -> Void
+    let onSelectMealSet: (MealSet) -> Void
 
     init(
-            mode: FoodPickerMode = .full,
-            onSelectTemplate: @escaping (FoodTemplate) -> Void,
-            onSelectMealSet: @escaping ([FoodPortion]) -> Void = { _ in }
-        ) {
-            self.mode = mode
-            self.onSelectTemplate = onSelectTemplate
-            self.onSelectMealSet = onSelectMealSet
-            _templates = Query(sort: [SortDescriptor(\FoodTemplate.nameEN)])
-        }
+        mode: FoodPickerMode = .full,
+        onSelectTemplate: @escaping (FoodTemplate) -> Void,
+        onSelectMealSet: @escaping (MealSet) -> Void = { _ in }
+    ) {
+        self.mode = mode
+        self.onSelectTemplate = onSelectTemplate
+        self.onSelectMealSet = onSelectMealSet
+        _templates = Query(sort: [SortDescriptor(\FoodTemplate.nameEN)])
+    }
 
     var body: some View {
         NavigationStack {
@@ -80,7 +79,7 @@ struct FoodPicker: View {
                             } else {
                                 ContentUnavailableView(
                                     String(localized: "no_pinned"),
-                                    systemImage: "pin.slash",
+                                    systemImage: "pin.slash"
                                 )
                             }
 
@@ -126,13 +125,13 @@ struct FoodPicker: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Image(systemName: "tray.and.arrow.down.fill")
-                .foregroundColor(.blue)
+            Image(systemName: "chevron.right")  // ▶️ 改成可点击箭头
+                .foregroundColor(.secondary)
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            let portions = FoodPortion.fromMealSet(set)  // ✅ 批量生成
-            onSelectMealSet(portions)
+            // 直接把 MealSet 交给上层，由上层决定如何构造条目
+            onSelectMealSet(set)
             dismiss()
         }
     }
@@ -152,7 +151,6 @@ struct FoodPicker: View {
         return mealSets.filter { $0.name.lowercased().contains(q) }
     }
     private var mealSetsFilteredWhenNotSearching: [MealSet] {
-        // 非搜索模式下直接全部显示
         mealSets
     }
 

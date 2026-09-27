@@ -57,7 +57,6 @@ struct TodayView: View {
                         gridSection
                     }
                     .padding(16)
-                    .contentShape(Rectangle())
                 }
                 .allowsHitTesting(!hasAnyOverlayLocal)
                 

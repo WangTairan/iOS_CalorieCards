@@ -8,6 +8,5 @@
     { "nameZH": "夏威夷果", "nameEN": "Macadamia nuts", "unit": "per100g", "kcalPerUnit": 718, "proteinPerUnit": 8.0, "carbPerUnit": 14.0, "fatPerUnit": 76.0 },
     { "nameZH": "花生", "nameEN": "Peanuts", "unit": "per100g", "kcalPerUnit": 567, "proteinPerUnit": 26.0, "carbPerUnit": 16.0, "fatPerUnit": 49.0 },
     { "nameZH": "葡萄干", "nameEN": "Raisins", "unit": "per100g", "kcalPerUnit": 299, "proteinPerUnit": 3.1, "carbPerUnit": 79.0, "fatPerUnit": 0.5 },
-    { "nameZH": "红枣（干）", "nameEN": "Jujube (dried)", "unit": "per100g", "kcalPerUnit": 281, "proteinPerUnit": 4.0, "carbPerUnit": 74.0, "fatPerUnit": 0.5 },
+    { "nameZH": "红枣（干）", "nameEN": "Jujube (dried)", "unit": "per100g", "kcalPerUnit": 281, "proteinPerUnit": 4.0, "carbPerUnit": 74.0, "fatPerUnit": 0.5 }
 ]
-

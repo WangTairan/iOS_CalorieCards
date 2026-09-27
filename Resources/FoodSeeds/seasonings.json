@@ -20,5 +20,5 @@
     { "nameZH": "蚝油", "nameEN": "Oyster sauce", "unit": "per100g", "kcalPerUnit": 120, "proteinPerUnit": 1.0, "carbPerUnit": 27.0, "fatPerUnit": 1.0 },
     { "nameZH": "番茄酱", "nameEN": "Ketchup", "unit": "per100g", "kcalPerUnit": 110, "proteinPerUnit": 1.2, "carbPerUnit": 26.0, "fatPerUnit": 0.1 },
     { "nameZH": "蛋黄酱", "nameEN": "Mayonnaise", "unit": "per100g", "kcalPerUnit": 720, "proteinPerUnit": 1.0, "carbPerUnit": 1.0, "fatPerUnit": 79.0 },
-    { "nameZH": "醋", "nameEN": "Vinegar", "unit": "per100g", "kcalPerUnit": 21, "proteinPerUnit": 0.0, "carbPerUnit": 0.9, "fatPerUnit": 0.0 },
+    { "nameZH": "醋", "nameEN": "Vinegar", "unit": "per100g", "kcalPerUnit": 21, "proteinPerUnit": 0.0, "carbPerUnit": 0.9, "fatPerUnit": 0.0 }
 ]

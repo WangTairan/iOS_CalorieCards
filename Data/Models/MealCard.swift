@@ -7,13 +7,15 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
     var protein: Int            // 蛋白质（g）
     var carb: Int               // 碳水（g）
     var fat: Int                // 脂肪（g）
-    var items: [FoodPortion]
 
-    // 额外手动输入（kcal 已有；新增三大营养素手动文本，便于持久化）
+    /// ⬅️ 关键改动：从 [FoodPortion] 改为 [CardEntry]，以便容纳“单食物/套餐”
+    var items: [CardEntry]
+
+    // 额外手动输入（卡片层面的手动加成）
     var manualKcalText: String?
-    var manualProteinText: String?   // 新增
-    var manualCarbText: String?      // 新增
-    var manualFatText: String?       // 新增
+    var manualProteinText: String?
+    var manualCarbText: String?
+    var manualFatText: String?
 
     var appearance: CardAppearance?
 
@@ -25,7 +27,7 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
         protein: Int = 0,
         carb: Int = 0,
         fat: Int = 0,
-        items: [FoodPortion] = [],
+        items: [CardEntry] = [],                 // ⬅️ 默认空数组
         manualKcalText: String? = nil,
         manualProteinText: String? = nil,
         manualCarbText: String? = nil,
@@ -60,7 +62,7 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
             protein: 0,
             carb: 0,
             fat: 0,
-            items: [],
+            items: [],                               // ⬅️ 仍为空
             manualKcalText: nil,
             manualProteinText: nil,
             manualCarbText: nil,
@@ -70,14 +72,14 @@ struct MealCard: Identifiable, Codable, Equatable, Hashable {
     }
 }
 
+// MARK: - 外观（与你原来的保持一致）
+
 struct CardAppearance: Codable, Equatable, Hashable {
     var symbol: String        // SF Symbol 名称
     var colorHex: String      // 颜色十六进制
-
     var color: Color { Color(hex: colorHex) }
 }
 
-// 方便编码颜色
 extension Color {
     init(hex: String) {
         var s = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
@@ -88,16 +90,15 @@ extension Color {
 
         let r, g, b: Double
         switch s.count {
-        case 3: // 支持 #RGB
+        case 3:
             r = Double((v >> 8) & 0xF) / 15.0
             g = Double((v >> 4) & 0xF) / 15.0
             b = Double(v & 0xF) / 15.0
-        default: // 默认 #RRGGBB
+        default:
             r = Double((v >> 16) & 0xFF) / 255.0
             g = Double((v >> 8) & 0xFF) / 255.0
             b = Double(v & 0xFF) / 255.0
         }
-
         self = Color(red: r, green: g, blue: b)
     }
 
@@ -106,7 +107,6 @@ extension Color {
         let ui = UIColor(self)
         var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         guard ui.getRed(&r, green: &g, blue: &b, alpha: &a) else {
-            // 兜底：无法解析（如动态/系统色）时返回默认蓝色
             return "#007AFF"
         }
         let R = Int(round(r * 255))
@@ -120,15 +120,35 @@ struct DefaultAppearance {
     static func `for`(_ name: CardName) -> CardAppearance {
         switch name.rawValue {
         case "Breakfast":
-            return .init(symbol: "sunrise", colorHex: "#007AFF")     // systemBlue
+            return .init(symbol: "sunrise", colorHex: "#007AFF")
         case "Lunch":
             return .init(symbol: "fork.knife.circle", colorHex: "#007AFF")
         case "Snack":
-            return .init(symbol: "takeoutbag.and.cup.and.straw", colorHex: "#FF9500") // systemOrange
+            return .init(symbol: "takeoutbag.and.cup.and.straw", colorHex: "#FF9500")
         case "Dinner":
-            return .init(symbol: "moon.stars", colorHex: "#007AFF")  // systemBlue 近似
+            return .init(symbol: "moon.stars", colorHex: "#007AFF")
         default:
             return .init(symbol: "fork.knife", colorHex: "#007AFF")
+        }
+    }
+}
+
+struct CardName: Codable, Hashable, Identifiable {
+    let rawValue: String
+    var id: String { rawValue }
+
+    static let breakfast = CardName(rawValue: "Breakfast")
+    static let lunch     = CardName(rawValue: "Lunch")
+    static let snack     = CardName(rawValue: "Snack")
+    static let dinner    = CardName(rawValue: "Dinner")
+
+    var title: String {
+        switch rawValue {
+        case "Breakfast": return String(localized: "breakfast")
+        case "Lunch":     return String(localized: "lunch")
+        case "Snack":     return String(localized: "snack")
+        case "Dinner":    return String(localized: "dinner")
+        default:          return rawValue.capitalized
         }
     }
 }

@@ -2,6 +2,5 @@
     { "nameZH": "鸡蛋", "nameEN": "Egg", "unit": "perPiece", "kcalPerUnit": 78, "proteinPerUnit": 6.0, "carbPerUnit": 0.6, "fatPerUnit": 5.0 },
   { "nameZH": "牛奶（全脂）", "nameEN": "Milk (whole)", "unit": "per100ml", "kcalPerUnit": 64, "proteinPerUnit": 3.3, "carbPerUnit": 4.7, "fatPerUnit": 3.6 },
   { "nameZH": "牛奶（半脱脂）", "nameEN": "Milk (semi-skimmed)", "unit": "per100ml", "kcalPerUnit": 47, "proteinPerUnit": 3.4, "carbPerUnit": 4.8, "fatPerUnit": 1.6 },
-  { "nameZH": "牛奶（脱脂）", "nameEN": "Milk (skimmed)", "unit": "per100ml", "kcalPerUnit": 35, "proteinPerUnit": 3.5, "carbPerUnit": 5.0, "fatPerUnit": 0.1 },
+  { "nameZH": "牛奶（脱脂）", "nameEN": "Milk (skimmed)", "unit": "per100ml", "kcalPerUnit": 35, "proteinPerUnit": 3.5, "carbPerUnit": 5.0, "fatPerUnit": 0.1 }
 ]
-
